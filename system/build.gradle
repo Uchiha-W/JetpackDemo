@@ -1,0 +1,19 @@
+if (isPlugins.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: common
+android {
+    defaultConfig {
+        if (isPlugins.toBoolean()) {
+            applicationId "com.hwei.home"
+        }
+    }
+}
+
+dependencies {
+    api project(':lib_base')
+}
