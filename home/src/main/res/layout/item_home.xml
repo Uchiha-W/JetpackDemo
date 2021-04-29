@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="article"
+            type="com.hwei.home.bean.Article" />
     </data>
 
     <LinearLayout
@@ -14,6 +16,7 @@
             android:id="@+id/tv_article"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="@{article.name}"
             android:gravity="center" />
     </LinearLayout>
 </layout>

@@ -7,22 +7,30 @@ import androidx.databinding.ViewDataBinding
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.hwei.home.BR
 import com.hwei.home.R
 import com.hwei.home.bean.Article
+import com.hwei.home.databinding.ItemHomeBinding
 
-class HomeAdapter<T : ViewDataBinding> :
-    PagedListAdapter<Article, RecyclerView.ViewHolder>(DIFF_CALL) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = DataBindingUtil.inflate<T>(
+class HomeAdapter:
+    PagedListAdapter<Article, HomeViewHolder>(DIFF_CALL) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+        val binding = DataBindingUtil.inflate<ItemHomeBinding>(
             LayoutInflater.from(parent.context),
             R.layout.item_home,
             parent,
             false
         )
-        return object : RecyclerView.ViewHolder(binding.root) {}
+        return HomeViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+        holder.binding.article = getItem(position)
+    }
+}
+
+class HomeViewHolder(val binding: ItemHomeBinding): RecyclerView.ViewHolder(binding.root) {
+    fun bind(){
 
     }
 }

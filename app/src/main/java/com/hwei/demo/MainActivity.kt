@@ -9,6 +9,7 @@ import com.hwei.lib_common.base.BaseActivity
 import com.hwei.lib_common.router.HomeRouter
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.lib_common.router.SystemRouter
+import java.lang.NullPointerException
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 return ARouter.getInstance().build(list[position]).navigation() as Fragment
             }
         }
+        binding.viewpager.isUserInputEnabled = false
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_1 -> binding.viewpager.currentItem = 0

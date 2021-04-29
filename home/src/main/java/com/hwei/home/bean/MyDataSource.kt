@@ -29,12 +29,12 @@ import javax.xml.datatype.DatatypeFactory
 //    }
 //}
 
-val pageListConfig = PagedList.Config.Builder()
-    .setPageSize(20)
-    .setEnablePlaceholders(true)
-    .setInitialLoadSizeHint(10)
-    .setMaxSize(Int.MAX_VALUE)
-    .setPrefetchDistance(5)
-    .build()
+//val pageListConfig = PagedList.Config.Builder()
+//    .setPageSize(20)
+//    .setEnablePlaceholders(false)
+//    .setInitialLoadSizeHint(10)
+//    .setMaxSize(Int.MAX_VALUE)
+//    .setPrefetchDistance(5)
+//    .build()
 
 //val LivePageData = LivePagedListBuilder(MyDataSourceFactory(), pageListConfig).build()
