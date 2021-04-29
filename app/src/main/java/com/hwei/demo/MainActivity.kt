@@ -1,6 +1,5 @@
 package com.hwei.demo
 
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
@@ -9,10 +8,8 @@ import com.hwei.lib_common.base.BaseActivity
 import com.hwei.lib_common.router.HomeRouter
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.lib_common.router.SystemRouter
-import java.lang.NullPointerException
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
-
 
     private val list = listOf(HomeRouter.home, SystemRouter.system, MeRouter.me)
 

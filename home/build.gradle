@@ -12,10 +12,20 @@ android {
             applicationId "com.hwei.home"
         }
     }
+    sourceSets {
+        main {
+            if (isPlugins.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
 }
 
 dependencies {
 
     api project(':lib_base')
     implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
+    implementation 'com.youth.banner:banner:2.1.0'
 }

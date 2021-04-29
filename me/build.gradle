@@ -9,7 +9,16 @@ apply from: common
 android {
     defaultConfig {
         if (isPlugins.toBoolean()) {
-            applicationId "com.hwei.home"
+            applicationId "com.hwei.me"
+        }
+    }
+    sourceSets {
+        main {
+            if (isPlugins.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
         }
     }
 }
