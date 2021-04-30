@@ -10,5 +10,5 @@
         tools:layout="@layout/fragment_me"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.hwei.me.MeFragment"/>
+        android:name="com.hwei.me.me.MeFragment"/>
 </LinearLayout>

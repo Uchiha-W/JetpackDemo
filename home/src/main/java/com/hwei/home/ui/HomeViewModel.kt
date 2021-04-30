@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.net.HomeApi
-import com.hwei.home.paging.HomeDataSource.HomePageSourceFactory
+import com.hwei.home.paging.DataSource.HomePageSourceFactory
 import com.hwei.home.paging.pageListConfig
 import com.hwei.lib_common.net.RetrofitManager
 import kotlinx.coroutines.launch

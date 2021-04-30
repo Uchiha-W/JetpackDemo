@@ -43,6 +43,9 @@ object SpStorage {
             is String -> stringPreferencesKey(s)
             is Boolean -> booleanPreferencesKey(s)
             is Float -> floatPreferencesKey(s)
+            is List<*> -> stringPreferencesKey(s)
+            is Set<*> -> stringSetPreferencesKey(s)
+            is Map<*, *> -> stringPreferencesKey(s)
             else -> throw IllegalArgumentException()
         }
         return key as Preferences.Key<T>
