@@ -1,11 +1,10 @@
 package com.hwei.lib_common.net
 
+import android.util.Log
 import com.hwei.lib_common.BuildConfig
-import com.hwei.lib_common.sp.SpDelegate
-import okhttp3.Cookie
-import okhttp3.CookieJar
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
+import com.hwei.lib_common.database.AppDataBase
+import com.hwei.lib_common.database.bean.CookieEntity
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,10 +23,23 @@ private fun getOkhttp(): OkHttpClient {
                 addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })
+                //addNetworkInterceptor(myItercepter())
             }
         }
         .cookieJar(CookieManager())
         .build()
+}
+
+private class myItercepter : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val sb = StringBuilder()
+        for (i in chain.request().headers) {
+            sb.append(i).append("\n")
+        }
+        val response = chain.proceed(chain.request())
+        Log.e("okhttp", sb.toString())
+        return response
+    }
 }
 
 private fun getRetrofit(okHttpClient: OkHttpClient): Retrofit {
@@ -55,16 +67,13 @@ private class CookieManager : CookieJar {
 
 private class CookieStore {
 
-    private var sp by SpDelegate<HashMap<String, Cookie>>("Cookie", HashMap())
-
     fun saveCookie(url: HttpUrl, cookie: Cookie) {
-        sp[url.host + cookie.name] = cookie
+        AppDataBase.cookieDao().insert(CookieEntity(url.host, cookie.name, cookie))
     }
 
     fun getCookie(url: HttpUrl): List<Cookie> {
-        val list = sp.filter {
-            it.key.contains(url.host)
-        }.values.toMutableList()
-        return list
+        return AppDataBase.cookieDao().getAll(url.host)?.map {
+            it.cookie
+        } ?: emptyList()
     }
 }

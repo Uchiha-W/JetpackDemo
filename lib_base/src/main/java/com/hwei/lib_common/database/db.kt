@@ -3,13 +3,16 @@ package com.hwei.lib_common.database
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.hwei.lib_common.BaseApplication
-import com.hwei.lib_common.database.bean.Concert
-import com.hwei.lib_common.database.dao.ConcertDao
+import com.hwei.lib_common.database.bean.CookieEntity
+import com.hwei.lib_common.database.convert.CookieConverter
+import com.hwei.lib_common.database.dao.CookieDao
 
-@Database(entities = [Concert::class], version = 1)
+@Database(entities = [CookieEntity::class], version = 1)
+@TypeConverters(CookieConverter::class)
 abstract class BaseDataBase : RoomDatabase() {
-    abstract fun concertDao(): ConcertDao
+    abstract fun cookieDao(): CookieDao
 }
 
 val AppDataBase =

@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.hwei.lib_common.sp.SpStorage
-import java.net.CookieStore
+import okhttp3.Cookie
 import kotlin.reflect.KProperty
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
