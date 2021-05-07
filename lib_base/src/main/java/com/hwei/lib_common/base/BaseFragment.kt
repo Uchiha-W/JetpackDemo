@@ -29,6 +29,12 @@ abstract class BaseFragment<T:ViewDataBinding> : Fragment() {
 
     abstract fun initView()
 
+    fun startLoading(){
+
+    }
+
+    fun stopLoading(){}
+
     @LayoutRes
     abstract fun setLayoutId(): Int
 }
