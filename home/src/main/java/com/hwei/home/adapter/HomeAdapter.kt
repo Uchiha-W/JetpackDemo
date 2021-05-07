@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hwei.home.R
 import com.hwei.home.bean.Article
 import com.hwei.home.databinding.ItemHomeBinding
+import javax.inject.Inject
 
-class HomeAdapter:
+class HomeAdapter @Inject constructor():
     PagedListAdapter<Article, HomeViewHolder>(DIFF_CALL) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = DataBindingUtil.inflate<ItemHomeBinding>(

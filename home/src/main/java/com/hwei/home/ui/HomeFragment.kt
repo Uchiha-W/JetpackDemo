@@ -12,12 +12,15 @@ import com.hwei.lib_common.router.HomeRouter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @Route(path = HomeRouter.home)
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var homeAdapter: HomeAdapter
+    @Inject lateinit var homeAdapter: HomeAdapter
     override fun setLayoutId(): Int {
         return R.layout.fragment_home
     }
@@ -46,7 +49,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initView() {
-        homeAdapter = HomeAdapter()
         binding.recyclerView.apply {
             adapter = homeAdapter
         }

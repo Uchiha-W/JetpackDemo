@@ -11,8 +11,9 @@ import com.hwei.home.paging.DataSource.HomePageSourceFactory
 import com.hwei.home.paging.pageListConfig
 import com.hwei.lib_common.net.RetrofitManager
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel @Inject constructor(): ViewModel() {
 
     private val _bannerData = MutableLiveData<List<BannerBean>>()
     val bannerData: LiveData<List<BannerBean>>

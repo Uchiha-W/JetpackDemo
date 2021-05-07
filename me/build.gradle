@@ -3,8 +3,6 @@ if (isPlugins.toBoolean()) {
 } else {
     apply plugin: 'com.android.library'
 }
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply from: common
 android {
     defaultConfig {
