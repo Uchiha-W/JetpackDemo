@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LivePagedListBuilder
+import androidx.paging.Pager
+import androidx.paging.cachedIn
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.net.HomeApi
-import com.hwei.home.paging.DataSource.HomePageSourceFactory
-import com.hwei.home.paging.pageListConfig
+import com.hwei.home.paging.DataSource.HomePageDataSource
+import com.hwei.home.paging.pageConfig
 import com.hwei.lib_common.net.RetrofitManager
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,8 +20,9 @@ class HomeViewModel @Inject constructor(): ViewModel() {
     val bannerData: LiveData<List<BannerBean>>
         get() = _bannerData
 
-    val livePageData =
-        LivePagedListBuilder(HomePageSourceFactory(viewModelScope), pageListConfig).build()
+    val livePageData = Pager(pageConfig) {
+        HomePageDataSource()
+    }.flow.cachedIn(viewModelScope)
 
     fun getBannerList() {
         viewModelScope.launch {

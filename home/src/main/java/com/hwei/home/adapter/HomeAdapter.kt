@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hwei.home.R
@@ -12,7 +13,7 @@ import com.hwei.home.databinding.ItemHomeBinding
 import javax.inject.Inject
 
 class HomeAdapter @Inject constructor():
-    PagedListAdapter<Article, HomeViewHolder>(DIFF_CALL) {
+    PagingDataAdapter<Article, HomeViewHolder>(DIFF_CALL) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = DataBindingUtil.inflate<ItemHomeBinding>(
             LayoutInflater.from(parent.context),
