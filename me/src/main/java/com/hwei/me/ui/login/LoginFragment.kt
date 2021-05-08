@@ -1,19 +1,18 @@
 package com.hwei.me.ui.login
 
+import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.me.R
 import com.hwei.me.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @Route(path = MeRouter.login)
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    @Inject
-    lateinit var loginViewModel: LoginViewModel
+    val loginViewModel: LoginViewModel by viewModels()
 
     override fun initData() {
         binding.btnLogin.setOnClickListener {

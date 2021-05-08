@@ -5,19 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.net.request
 import com.hwei.me.bean.UserBean
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-class  LoginViewModel @Inject constructor(private val loginRepository: LoginRepository): BaseViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
+    BaseViewModel() {
 
     private val _userBean = MutableLiveData<UserBean>()
     val userBean: LiveData<UserBean>
         get() = _userBean
+
     fun login(username: String, password: String) {
         request<UserBean> {
             onRequest {
                 loginRepository.login(username, password)
             }
-            onSuccess{
+            onSuccess {
                 _userBean.value = it
             }
 
