@@ -26,7 +26,7 @@ class HomePageDataSource : PagingSource<Int, Article>() {
             if (result.over) {
                 LoadResult.Page(result.datas, null, null)
             } else {
-                LoadResult.Page(result.datas, null, result.curPage + 1)
+                LoadResult.Page(result.datas, null, result.curPage)
             }
         } catch (e: Exception) {
             LoadResult.Error(e)

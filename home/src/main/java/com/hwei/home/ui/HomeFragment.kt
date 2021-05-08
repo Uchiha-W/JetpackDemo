@@ -2,8 +2,11 @@ package com.hwei.home.ui
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.home.R
+import com.hwei.home.adapter.FooterLoadStateAdapter
+import com.hwei.home.adapter.HeaderLoadStateAdapter
 import com.hwei.home.adapter.HomeAdapter
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.databinding.FragmentHomeBinding
@@ -57,6 +60,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.recyclerView.apply {
             adapter = homeAdapter
         }
+//        homeAdapter.addLoadStateListener {
+//            when(it.refresh){
+//                is LoadState.Loading ->null
+//                is LoadState.Error ->null
+//                is LoadState.NotLoading ->null
+//            }
+//        }
+        homeAdapter.withLoadStateHeaderAndFooter(HeaderLoadStateAdapter(homeAdapter::refresh),FooterLoadStateAdapter(homeAdapter::retry))
+
     }
 
 }
