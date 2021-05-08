@@ -58,7 +58,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initView() {
         binding.recyclerView.apply {
-            adapter = homeAdapter
+            adapter = homeAdapter.withLoadStateHeaderAndFooter(HeaderLoadStateAdapter(homeAdapter::refresh),FooterLoadStateAdapter(homeAdapter::retry))
         }
 //        homeAdapter.addLoadStateListener {
 //            when(it.refresh){
@@ -67,7 +67,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 //                is LoadState.NotLoading ->null
 //            }
 //        }
-        homeAdapter.withLoadStateHeaderAndFooter(HeaderLoadStateAdapter(homeAdapter::refresh),FooterLoadStateAdapter(homeAdapter::retry))
 
     }
 

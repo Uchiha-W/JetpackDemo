@@ -25,7 +25,4 @@ class HeaderLoadStateAdapter(block:()->Unit) : LoadStateAdapter<HeaderViewHolder
         return HeaderViewHolder(view)
     }
 
-    override fun displayLoadStateAsItem(loadState: LoadState): Boolean {
-        return true
-    }
 }

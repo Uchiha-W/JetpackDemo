@@ -26,6 +26,6 @@ class FooterLoadStateAdapter(block:()->Unit) : LoadStateAdapter<FooterViewHolder
     }
 
     override fun displayLoadStateAsItem(loadState: LoadState): Boolean {
-        return true
+        return super.displayLoadStateAsItem(loadState)
     }
 }
