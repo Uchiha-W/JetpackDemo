@@ -6,7 +6,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface MeApi {
+interface MeService {
     @POST("/user/login")
     @FormUrlEncoded
     suspend fun login(

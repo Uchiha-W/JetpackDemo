@@ -1,23 +1,17 @@
-package com.hwei.me.me
+package com.hwei.me.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.hwei.lib_common.base.BaseViewModel
-import com.hwei.lib_common.ktx.showToast
-import com.hwei.lib_common.net.Resource
-import com.hwei.lib_common.net.RetrofitManager
 import com.hwei.lib_common.net.request
 import com.hwei.me.bean.UserBean
-import com.hwei.me.net.MeApi
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : BaseViewModel() {
+class  LoginViewModel @Inject constructor(private val loginRepository: LoginRepository): BaseViewModel() {
 
     private val _userBean = MutableLiveData<UserBean>()
     val userBean: LiveData<UserBean>
         get() = _userBean
-    private val loginRepository = LoginRepository()
     fun login(username: String, password: String) {
         request<UserBean> {
             onRequest {
@@ -41,5 +35,3 @@ class LoginViewModel : BaseViewModel() {
         }
     }
 }
-
-data class Loading(var load: Boolean)

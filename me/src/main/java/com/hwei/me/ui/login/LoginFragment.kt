@@ -1,16 +1,19 @@
-package com.hwei.me.me
+package com.hwei.me.ui.login
 
-import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.me.R
 import com.hwei.me.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @Route(path = MeRouter.login)
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    private val loginViewModel:LoginViewModel by viewModels()
+    @Inject
+    lateinit var loginViewModel: LoginViewModel
 
     override fun initData() {
         binding.btnLogin.setOnClickListener {
@@ -22,7 +25,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     override fun initView() {
+        loginViewModel.userBean.observe(this){
 
+        }
     }
 
     override fun setLayoutId(): Int {

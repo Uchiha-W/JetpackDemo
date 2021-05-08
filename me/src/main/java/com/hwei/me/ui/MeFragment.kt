@@ -1,4 +1,4 @@
-package com.hwei.me.me
+package com.hwei.me.ui
 
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route

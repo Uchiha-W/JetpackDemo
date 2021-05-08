@@ -15,7 +15,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val list = listOf(HomeRouter.home, SystemRouter.system, MeRouter.me)
 
-
     override fun initData() {
 
     }

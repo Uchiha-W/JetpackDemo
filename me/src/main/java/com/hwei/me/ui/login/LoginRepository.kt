@@ -1,13 +1,13 @@
-package com.hwei.me.me
+package com.hwei.me.ui.login
 
 import com.hwei.lib_common.net.Resource
-import com.hwei.lib_common.net.RetrofitManager
 import com.hwei.me.bean.UserBean
-import com.hwei.me.net.MeApi
+import com.hwei.me.net.MeService
+import javax.inject.Inject
 
-class LoginRepository {
+class LoginRepository @Inject constructor(private val meService: MeService){
     suspend fun login(username: String, password: String): Resource<UserBean> {
-        return RetrofitManager.create(MeApi::class.java).login(username, password).resource
+        return meService.login(username, password).resource
     }
 
     suspend fun register(
@@ -15,7 +15,7 @@ class LoginRepository {
         password: String,
         repassword: String
     ): Resource<UserBean> {
-        return RetrofitManager.create(MeApi::class.java)
+        return meService
             .register(username, password, repassword).resource
     }
 }
