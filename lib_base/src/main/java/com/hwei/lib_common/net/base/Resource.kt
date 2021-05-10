@@ -1,4 +1,4 @@
-package com.hwei.lib_common.net
+package com.hwei.lib_common.net.base
 
 sealed class Resource<T>(
     val data: T? = null,

@@ -1,6 +1,6 @@
 package com.hwei.me.net
 
-import com.hwei.lib_common.net.BaseResult
+import com.hwei.lib_common.net.base.BaseResult
 import com.hwei.me.bean.UserBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

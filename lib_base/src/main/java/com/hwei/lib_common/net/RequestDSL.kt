@@ -3,6 +3,7 @@ package com.hwei.lib_common.net
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hwei.lib_common.ktx.showToast
+import com.hwei.lib_common.net.base.Resource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

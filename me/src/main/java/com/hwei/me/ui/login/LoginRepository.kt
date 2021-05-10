@@ -1,6 +1,6 @@
 package com.hwei.me.ui.login
 
-import com.hwei.lib_common.net.Resource
+import com.hwei.lib_common.net.base.Resource
 import com.hwei.me.bean.UserBean
 import com.hwei.me.net.MeService
 import javax.inject.Inject
