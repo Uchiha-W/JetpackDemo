@@ -2,7 +2,6 @@ package com.hwei.home.ui
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.home.R
 import com.hwei.home.adapter.FooterLoadStateAdapter
@@ -17,7 +16,6 @@ import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,8 +30,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initData() {
-        lifecycleScope.launch {
-            homeViewModel.livePageData.collectLatest {
+        homeViewModel.livePageData.observe(this) {
+            lifecycleScope.launch {
                 homeAdapter.submitData(it)
             }
         }

@@ -1,9 +1,6 @@
 package com.hwei.home.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.hwei.home.bean.BannerBean
@@ -22,7 +19,7 @@ class HomeViewModel @Inject constructor(): ViewModel() {
 
     val livePageData = Pager(pageConfig) {
         HomePageDataSource()
-    }.flow.cachedIn(viewModelScope)
+    }.flow.cachedIn(viewModelScope).asLiveData()
 
     fun getBannerList() {
         viewModelScope.launch {
