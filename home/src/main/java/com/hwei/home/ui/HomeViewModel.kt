@@ -5,12 +5,10 @@ import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.net.HomeApi
-import com.hwei.home.paging.pageConfig
-import com.hwei.lib_common.net.RetrofitManager
 import com.hwei.lib_common.net.request
 import com.hwei.lib_common.paging.BasePageDataSource
+import com.hwei.lib_common.paging.PagingConfigFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +20,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var homeApi: HomeApi
-    val livePageData = Pager(pageConfig) {
+    val livePageData = Pager(PagingConfigFactory.get()) {
         BasePageDataSource {
             homeApi.getArticleList(it).data
         }
