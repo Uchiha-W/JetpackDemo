@@ -17,12 +17,12 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         initData()
     }
 
-    abstract fun initData()
+    @LayoutRes
+    abstract fun setLayoutId(): Int
 
     abstract fun initView()
 
-    @LayoutRes
-    abstract fun setLayoutId(): Int
+    abstract fun initData()
 
 
     override fun onDestroy() {

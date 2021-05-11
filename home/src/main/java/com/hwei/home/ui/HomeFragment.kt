@@ -1,17 +1,20 @@
 package com.hwei.home.ui
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.map
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.home.R
 import com.hwei.home.adapter.HomeAdapter
+import com.hwei.home.bean.Article
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.databinding.FragmentHomeBinding
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.ktx.load
 import com.hwei.lib_common.ktx.showToast
+import com.hwei.lib_common.paging.OnItemClickListener
 import com.hwei.lib_common.router.HomeRouter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
@@ -25,6 +28,7 @@ import javax.inject.Inject
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModels()
+
     @Inject
     lateinit var homeAdapter: HomeAdapter
     override fun setLayoutId(): Int {
@@ -65,12 +69,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             homeAdapter.refresh()
         }
         homeAdapter.addLoadStateListener {
-            when(it.refresh){
+            when (it.refresh) {
                 is LoadState.Loading -> null
-                is LoadState.Error -> showToast((it.refresh as LoadState.Error).error.message?:"unknown error")
-                is LoadState.NotLoading ->null
+                is LoadState.Error -> showToast(
+                    (it.refresh as LoadState.Error).error.message ?: "unknown error"
+                )
+                is LoadState.NotLoading -> null
             }
         }
+        homeAdapter.setOnItemClickListener(object : OnItemClickListener<Article> {
+            override fun onClick(v: View, item: Article, position: Int) {
+                ARouter.getInstance().build(HomeRouter.article).withString("link",item.link).navigation()
+            }
+        })
 
     }
 

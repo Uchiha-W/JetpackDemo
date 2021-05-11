@@ -4,6 +4,7 @@ if (isPlugins.toBoolean()) {
     apply plugin: 'com.android.library'
 }
 apply from: common
+apply plugin: 'kotlin-android'
 android {
     defaultConfig {
         if (isPlugins.toBoolean()) {
@@ -24,4 +25,7 @@ android {
 dependencies {
 
     api project(':lib_base')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

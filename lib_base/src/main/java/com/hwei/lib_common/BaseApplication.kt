@@ -25,11 +25,11 @@ open class BaseApplication : Application() {
                 R.color.app_300,
                 android.R.color.white
             )
-            ClassicsHeader(context);
+            ClassicsHeader(context)
         }
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ -> //指定为经典Footer，默认是 BallPulseFooter
-            ClassicsFooter(context).setDrawableSize(20f);
+            ClassicsFooter(context).setDrawableSize(20f)
         }
 
     }

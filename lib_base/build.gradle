@@ -74,4 +74,7 @@ dependencies {
 
     api "androidx.paging:paging-runtime:3.0.0"
     api 'com.youth.banner:banner:2.1.0'
+
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
+    api 'com.github.lzyzsd:jsbridge:1.0.4'
 }

@@ -3,8 +3,43 @@ plugins {
 }
 apply from: common
 android {
+    signingConfigs {
+        'default' {
+            storeFile file('H:\\Demo\\gradle\\hwei.jks')
+            storePassword 'hw12345'
+            keyAlias 'hwei'
+            keyPassword 'hw12345'
+        }
+    }
     defaultConfig {
         applicationId "com.hwei.demo"
+        signingConfig signingConfigs.'default'
+    }
+    buildTypes {
+        one1 {
+
+        }
+        two2 {
+
+        }
+    }
+    productFlavors {
+        one {
+            dimension 'dimens'
+            applicationId 'com.a.a'
+        }
+        two {
+            dimension 'dimens'
+            applicationId 'com.b.b'
+        }
+    }
+    flavorDimensions 'dimens'
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                // 此处指定生成的apk文件名
+                outputFileName = "hwei.apk"
+            }
     }
 }
 
