@@ -5,7 +5,7 @@ apply from: common
 android {
     signingConfigs {
         'default' {
-            storeFile file('H:\\Demo\\gradle\\hwei.jks')
+            storeFile file('../gradle/hwei.jks')
             storePassword 'hw12345'
             keyAlias 'hwei'
             keyPassword 'hw12345'
@@ -16,21 +16,19 @@ android {
         signingConfig signingConfigs.'default'
     }
     buildTypes {
-        one1 {
+        debug {
 
         }
-        two2 {
+        release {
 
         }
     }
     productFlavors {
         one {
             dimension 'dimens'
-            applicationId 'com.a.a'
         }
         two {
             dimension 'dimens'
-            applicationId 'com.b.b'
         }
     }
     flavorDimensions 'dimens'
