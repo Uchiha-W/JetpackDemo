@@ -1,34 +1,23 @@
 package com.hwei.home.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.hwei.home.R
 import com.hwei.home.bean.Article
 import com.hwei.home.databinding.ItemHomeBinding
+import com.hwei.lib_common.paging.BasePagingAdapter
+import com.hwei.lib_common.paging.BaseViewHolder
 import javax.inject.Inject
 
 class HomeAdapter @Inject constructor() :
-    PagingDataAdapter<Article, HomeViewHolder>(DIFF_CALL) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        val binding = DataBindingUtil.inflate<ItemHomeBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_home,
-            parent,
-            false
-        )
-        return HomeViewHolder(binding)
+    BasePagingAdapter<ItemHomeBinding, Article>(DIFF_CALL) {
+    override fun setLayoutId(): Int {
+        return R.layout.item_home
     }
 
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<ItemHomeBinding>, position: Int) {
         holder.binding.article = getItem(position)
     }
 }
-
-class HomeViewHolder(val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root)
 
 val DIFF_CALL = object : DiffUtil.ItemCallback<Article>() {
     override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
