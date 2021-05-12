@@ -1,14 +1,22 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'com.android.application'
 }
 apply from: common
+
+//load keystore.properties
+def keystorePropertiesFile = rootProject.file("secret/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     signingConfigs {
         'default' {
-            storeFile file('../gradle/hwei.jks')
-            storePassword 'hw12345'
-            keyAlias 'hwei'
-            keyPassword 'hw12345'
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
         }
     }
     defaultConfig {
@@ -36,9 +44,13 @@ android {
         variant ->
             variant.outputs.all {
                 // 此处指定生成的apk文件名
-                outputFileName = "hwei.apk"
+                outputFileName = "demo-${variant.name}${variant.versionName}-${getCurrentTime()}.apk"
             }
     }
+}
+
+static String getCurrentTime(){
+    return new SimpleDateFormat("yyyy-MM-dd").format(new Date())
 }
 
 dependencies {
