@@ -7,7 +7,7 @@ import com.hwei.lib_common.net.base.BaseResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface HomeApi {
+interface HomeService {
     @GET("/article/list/{page}/json")
     suspend fun getArticleList(@Path("page") page: Int): BaseResult<BasePage<Article>>
 
