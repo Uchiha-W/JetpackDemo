@@ -49,8 +49,14 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             currentFragment = fragment
         } else {
             childFragmentManager.beginTransaction()
-                .show(fragment)
-                .commit()
+                .apply {
+                    show(fragment)
+                    currentFragment?.let {
+                        hide(it)
+                    }
+                    commit()
+                }
+            currentFragment = fragment
         }
     }
 }
