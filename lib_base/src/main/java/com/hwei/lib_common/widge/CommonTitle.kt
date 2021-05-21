@@ -9,22 +9,16 @@ import androidx.databinding.DataBindingUtil
 import com.hwei.lib_common.R
 import com.hwei.lib_common.databinding.LayoutCommonTitleBinding
 
-class CommonTitle : RelativeLayout {
+
+class CommonTitle @JvmOverloads constructor(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    defStyleAttr: Int = -1
+) :
+    RelativeLayout(context, attributeSet, defStyleAttr) {
     private lateinit var binding: LayoutCommonTitleBinding
 
-    constructor(context: Context) : this(context, null)
-
-    constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, -1)
-
-    constructor(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attributeSet,
-        defStyleAttr
-    ) {
-        init(attributeSet)
-    }
-
-    private fun init(attributeSet: AttributeSet?) {
+    init {
         initView()
         initData(attributeSet)
     }
