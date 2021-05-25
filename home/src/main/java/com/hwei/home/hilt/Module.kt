@@ -1,7 +1,6 @@
 package com.hwei.home.hilt
 
 import com.hwei.home.net.HomeService
-import com.hwei.lib_common.hilt.annotation.OkhttpAnnotation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

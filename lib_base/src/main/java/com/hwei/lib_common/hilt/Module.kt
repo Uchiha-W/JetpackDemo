@@ -1,7 +1,7 @@
 package com.hwei.lib_common.hilt
 
 import com.hwei.lib_common.BuildConfig
-import com.hwei.lib_common.hilt.annotation.OkhttpAnnotation
+import com.hwei.lib_common.hilt.annotation.RetrofitAnnotation
 import com.hwei.lib_common.net.cookie.CookieManager
 import dagger.Module
 import dagger.Provides
@@ -17,8 +17,8 @@ import javax.inject.Inject
 @Module
 @InstallIn(SingletonComponent::class)
 class Module {
-    val BASE_URL = "https://www.wanandroid.com"
-    val OTHER_URL = ""
+    private val BASE_URL = "https://www.wanandroid.com"
+    private val OTHER_URL = ""
 
     @Provides
     @Inject fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
@@ -30,7 +30,7 @@ class Module {
     }
 
     @Provides
-    @OkhttpAnnotation.OtherOkHttpClient
+    @RetrofitAnnotation.OtherRetrofit
     @Inject fun provideRetrofit2(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
