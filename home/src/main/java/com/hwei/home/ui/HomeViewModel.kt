@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.hwei.home.bean.BannerBean
-import com.hwei.home.net.HomeService
 import com.hwei.lib_common.net.request
 import com.hwei.lib_common.paging.BasePageDataSource
 import com.hwei.lib_common.paging.PagingConfigFactory

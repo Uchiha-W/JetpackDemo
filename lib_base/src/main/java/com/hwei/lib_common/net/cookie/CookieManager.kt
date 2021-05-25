@@ -1,4 +1,4 @@
-package com.hwei.lib_common.net
+package com.hwei.lib_common.net.cookie
 
 import com.hwei.lib_common.database.AppDataBase
 import com.hwei.lib_common.database.bean.CookieEntity

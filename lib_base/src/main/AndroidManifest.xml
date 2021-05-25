@@ -3,5 +3,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hwei.lib_common">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <application tools:replace="android:theme"/>
 </manifest>

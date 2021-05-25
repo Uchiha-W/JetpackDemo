@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
-
+apply from: common
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -77,4 +77,8 @@ dependencies {
 
     implementation "androidx.work:work-runtime-ktx:2.5.0"
     api 'com.github.lzyzsd:jsbridge:1.0.4'
+    //arouter
+    api 'com.alibaba:arouter-api:1.5.1'
+    //hilt
+
 }

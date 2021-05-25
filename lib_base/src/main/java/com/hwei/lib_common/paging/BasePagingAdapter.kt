@@ -16,6 +16,7 @@ abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
     PagingDataAdapter<T, BaseViewHolder<VB>>(callback) {
 
     private var onItemClickListener: OnItemClickListener<T>? = null
+    private var onItemLongClickListener: OnItemLongClickListener<T>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<VB> {
         val binding = DataBindingUtil.inflate<VB>(
@@ -26,11 +27,14 @@ abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
         )
         return BaseViewHolder(binding).apply {
             this.binding.root.setOnClickListener {
-                onItemClickListener?.onClick(
-                    it,
-                    getItem(layoutPosition) ?: Any() as T,
-                    layoutPosition
-                )
+                getItem(absoluteAdapterPosition)?.let { item ->
+                    onItemClickListener?.onClick(it, item, layoutPosition)
+                }
+            }
+            this.binding.root.setOnLongClickListener {
+                getItem(absoluteAdapterPosition)?.let { item ->
+                    onItemLongClickListener?.onLongClick(it, item, absoluteAdapterPosition)
+                } ?: false
             }
         }
     }
@@ -43,6 +47,9 @@ abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
         this.onItemClickListener = onItemClickListener
     }
 
+    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener<T>) {
+        this.onItemLongClickListener = onItemLongClickListener
+    }
 }
 
 class BaseViewHolder<VB : ViewDataBinding>(val binding: VB) :
@@ -50,4 +57,8 @@ class BaseViewHolder<VB : ViewDataBinding>(val binding: VB) :
 
 interface OnItemClickListener<T : Any> {
     fun onClick(v: View, item: T, position: Int)
+}
+
+interface OnItemLongClickListener<T : Any> {
+    fun onLongClick(v: View, item: T, position: Int): Boolean
 }
