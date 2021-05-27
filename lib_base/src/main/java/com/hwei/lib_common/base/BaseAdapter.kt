@@ -11,7 +11,7 @@ import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.listener.OnItemLongClickListener
 
 abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
-    RecyclerView.Adapter<BaseViewHolder<VB>>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     protected val list = mutableListOf<T>()
     private var onItemClickListener: OnItemClickListener<T>? = null
@@ -28,7 +28,17 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     @LayoutRes
     abstract fun setLayoutId(): Int
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<VB> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == type_header || viewType == type_footer) {
+            val viewDataBinding: ViewDataBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                if (viewType == type_header) headerLayoutId else footerLayoutId,
+                parent,
+                false
+            )
+            return HeaderOrFooterViewHolder(viewDataBinding)
+        }
+
         val binding = DataBindingUtil.inflate<VB>(
             LayoutInflater.from(parent.context),
             setLayoutId(),
@@ -57,24 +67,27 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<VB>, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (position == 0 && haveHeader()) {
-            onBindHeaderViewHolder(holder as HeaderViewHolder<VB>)
+            onBindHeaderViewHolder(holder as HeaderOrFooterViewHolder<*>)
         } else if (position == itemCount - 1 && haveFooter()) {
-            onBindFooterViewHolder(holder)
+            onBindFooterViewHolder(holder as HeaderOrFooterViewHolder<*>)
         } else {
-            onBindExtendsViewHolder(holder, if (haveHeader()) position - 1 else position)
+            onBindExtendsViewHolder(
+                holder as BaseViewHolder<VB>,
+                if (haveHeader()) position - 1 else position
+            )
         }
     }
 
     abstract fun onBindExtendsViewHolder(holder: BaseViewHolder<VB>, position: Int)
 
 
-    open fun onBindHeaderViewHolder(holder: HeaderViewHolder<VB>) {
+    open fun onBindHeaderViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
 
     }
 
-    open fun onBindFooterViewHolder(holder: BaseViewHolder<VB>) {
+    open fun onBindFooterViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
 
     }
 
@@ -89,24 +102,21 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
         return size
     }
 
-    /**
-     * todo
-     */
-//    fun addHeaderView(headerLayoutId: Int) {
-//        this.headerLayoutId = headerLayoutId
-//    }
-//
-//    fun removeHeaderView() {
-//        this.headerLayoutId = View.NO_ID
-//    }
-//
-//    fun addFooterView(footerLayoutId: Int) {
-//        this.footerLayoutId = footerLayoutId
-//    }
-//
-//    fun removeFooterView() {
-//        this.footerLayoutId = View.NO_ID
-//    }
+    fun addHeaderView(headerLayoutId: Int) {
+        this.headerLayoutId = headerLayoutId
+    }
+
+    fun removeHeaderView() {
+        this.headerLayoutId = View.NO_ID
+    }
+
+    fun addFooterView(footerLayoutId: Int) {
+        this.footerLayoutId = footerLayoutId
+    }
+
+    fun removeFooterView() {
+        this.footerLayoutId = View.NO_ID
+    }
 
     private fun haveHeader() = headerLayoutId != View.NO_ID
     private fun haveFooter() = footerLayoutId != View.NO_ID

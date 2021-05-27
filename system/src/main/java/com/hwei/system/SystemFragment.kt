@@ -5,11 +5,13 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.base.BaseAdapter
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.base.BaseViewHolder
+import com.hwei.lib_common.base.HeaderOrFooterViewHolder
 import com.hwei.lib_common.ktx.showToast
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.router.SystemRouter
 import com.hwei.system.databinding.FragmentSystemBinding
 import com.hwei.system.databinding.ItemBinding
+import com.hwei.system.databinding.ItemHeaderBinding
 
 @Route(path = SystemRouter.system)
 class SystemFragment : BaseFragment<FragmentSystemBinding>() {
@@ -30,8 +32,18 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
             ) {
                 holder.binding.tvTitle.text = list[position]
             }
-        }
 
+            override fun onBindHeaderViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
+                val itemHeaderBinding = holderOrFooter.binding as ItemHeaderBinding
+                itemHeaderBinding.tvTitle.text = "i am header"
+            }
+
+            override fun onBindFooterViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
+                holderOrFooter.binding.setVariable(BR.title, "i am footer")
+            }
+        }
+        adapter.addFooterView(R.layout.item_footer)
+        adapter.addHeaderView(R.layout.item_header)
         adapter.setOnItemClickListener(object : OnItemClickListener<String> {
             override fun onClick(v: View, item: String, position: Int) {
                 showToast(item)
