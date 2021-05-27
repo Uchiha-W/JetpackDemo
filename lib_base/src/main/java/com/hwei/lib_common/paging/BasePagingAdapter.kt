@@ -1,7 +1,6 @@
 package com.hwei.lib_common.paging
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -9,6 +8,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.hwei.lib_common.base.BaseViewHolder
+import com.hwei.lib_common.listener.OnItemClickListener
+import com.hwei.lib_common.listener.OnItemLongClickListener
 
 abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
     callback: DiffUtil.ItemCallback<T>
@@ -50,15 +52,4 @@ abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
     fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener<T>) {
         this.onItemLongClickListener = onItemLongClickListener
     }
-}
-
-class BaseViewHolder<VB : ViewDataBinding>(val binding: VB) :
-    RecyclerView.ViewHolder(binding.root)
-
-interface OnItemClickListener<T : Any> {
-    fun onClick(v: View, item: T, position: Int)
-}
-
-interface OnItemLongClickListener<T : Any> {
-    fun onLongClick(v: View, item: T, position: Int): Boolean
 }

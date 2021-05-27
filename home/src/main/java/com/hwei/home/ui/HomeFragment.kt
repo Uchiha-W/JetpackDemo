@@ -14,7 +14,7 @@ import com.hwei.home.databinding.FragmentHomeBinding
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.ktx.load
 import com.hwei.lib_common.ktx.showToast
-import com.hwei.lib_common.paging.OnItemClickListener
+import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.router.HomeRouter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
@@ -79,7 +79,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         homeAdapter.setOnItemClickListener(object : OnItemClickListener<Article> {
             override fun onClick(v: View, item: Article, position: Int) {
-                ARouter.getInstance().build(HomeRouter.article).withString("link",item.link).navigation()
+                ARouter.getInstance().build(HomeRouter.article).withString("link", item.link)
+                    .navigation()
             }
         })
 

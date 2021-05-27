@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.hwei.home.R
 import com.hwei.home.bean.Article
 import com.hwei.home.databinding.ItemHomeBinding
+import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.lib_common.paging.BasePagingAdapter
-import com.hwei.lib_common.paging.BaseViewHolder
 import javax.inject.Inject
 
 class HomeAdapter @Inject constructor() :
