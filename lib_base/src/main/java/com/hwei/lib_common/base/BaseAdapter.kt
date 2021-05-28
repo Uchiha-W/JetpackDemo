@@ -83,11 +83,11 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     abstract fun onBindExtendsViewHolder(holder: BaseViewHolder<VB>, position: Int)
 
 
-    open fun onBindHeaderViewHolder(holderOrFooter: BaseViewHolder<*>) {
+    open fun onBindHeaderViewHolder(headerViewHolder: BaseViewHolder<*>) {
 
     }
 
-    open fun onBindFooterViewHolder(holderOrFooter: BaseViewHolder<*>) {
+    open fun onBindFooterViewHolder(footerViewHolder: BaseViewHolder<*>) {
 
     }
 

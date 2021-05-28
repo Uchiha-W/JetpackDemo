@@ -32,13 +32,13 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
                 holder.binding.tvTitle.text = datas[position]
             }
 
-            override fun onBindHeaderViewHolder(holderOrFooter: BaseViewHolder<*>) {
-                val itemHeaderBinding = holderOrFooter.binding as ItemHeaderBinding
+            override fun onBindHeaderViewHolder(headerViewHolder: BaseViewHolder<*>) {
+                val itemHeaderBinding = headerViewHolder.binding as ItemHeaderBinding
                 itemHeaderBinding.tvTitle.text = "i am header"
             }
 
-            override fun onBindFooterViewHolder(holderOrFooter: BaseViewHolder<*>) {
-                holderOrFooter.binding.setVariable(BR.title, "i am footer")
+            override fun onBindFooterViewHolder(footerViewHolder: BaseViewHolder<*>) {
+                footerViewHolder.binding.setVariable(BR.title, "i am footer")
             }
         }
         adapter.addFooterView(R.layout.item_footer)
