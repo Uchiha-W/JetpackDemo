@@ -13,7 +13,7 @@ import com.hwei.lib_common.listener.OnItemLongClickListener
 abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    protected val list = mutableListOf<T>()
+    protected val datas = mutableListOf<T>()
     private var onItemClickListener: OnItemClickListener<T>? = null
     private var onItemLongClickListener: OnItemLongClickListener<T>? = null
     private var headerLayoutId: Int = View.NO_ID
@@ -51,7 +51,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
                     if (haveHeader()) absoluteAdapterPosition - 1 else absoluteAdapterPosition
                 onItemClickListener?.onClick(
                     it,
-                    list[position],
+                    datas[position],
                     position
                 )
             }
@@ -60,7 +60,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
                     if (haveHeader()) absoluteAdapterPosition - 1 else absoluteAdapterPosition
                 onItemLongClickListener?.onLongClick(
                     it,
-                    list[position],
+                    datas[position],
                     position
                 ) ?: false
             }
@@ -92,7 +92,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     }
 
     override fun getItemCount(): Int {
-        var size = list.size
+        var size = datas.size
         if (haveHeader()) {
             size++
         }
@@ -132,7 +132,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     }
 
     fun setData(list: MutableList<T>) {
-        this.list.apply {
+        this.datas.apply {
             clear()
             addAll(list)
         }
@@ -140,7 +140,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     }
 
     fun addData(list: MutableList<T>) {
-        this.list.addAll(list)
+        this.datas.addAll(list)
         notifyDataSetChanged()
     }
 

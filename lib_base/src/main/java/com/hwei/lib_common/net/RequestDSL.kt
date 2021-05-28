@@ -48,9 +48,8 @@ fun <T> ViewModel.request(block: RequestDSL<T>.() -> Unit) {
                     }
                 } catch (e: Exception) {
                     if (e !is CancellationException) {
-                        onFailure?.invoke(e.message!!)
-                    } else {
-                        showToast("exception error")
+                        onFailure?.invoke(e.message.orEmpty())
+                        showToast(e.message.orEmpty())
                     }
                 } finally {
                     onComplete?.invoke()

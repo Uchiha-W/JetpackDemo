@@ -30,7 +30,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
                 holder: BaseViewHolder<ItemBinding>,
                 position: Int
             ) {
-                holder.binding.tvTitle.text = list[position]
+                holder.binding.tvTitle.text = datas[position]
             }
 
             override fun onBindHeaderViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
