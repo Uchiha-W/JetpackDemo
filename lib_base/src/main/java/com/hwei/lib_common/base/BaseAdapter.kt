@@ -36,7 +36,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
                 parent,
                 false
             )
-            return HeaderOrFooterViewHolder(viewDataBinding)
+            return BaseViewHolder(viewDataBinding)
         }
 
         val binding = DataBindingUtil.inflate<VB>(
@@ -69,9 +69,9 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (position == 0 && haveHeader()) {
-            onBindHeaderViewHolder(holder as HeaderOrFooterViewHolder<*>)
+            onBindHeaderViewHolder(holder as BaseViewHolder<*>)
         } else if (position == itemCount - 1 && haveFooter()) {
-            onBindFooterViewHolder(holder as HeaderOrFooterViewHolder<*>)
+            onBindFooterViewHolder(holder as BaseViewHolder<*>)
         } else {
             onBindExtendsViewHolder(
                 holder as BaseViewHolder<VB>,
@@ -83,11 +83,11 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     abstract fun onBindExtendsViewHolder(holder: BaseViewHolder<VB>, position: Int)
 
 
-    open fun onBindHeaderViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
+    open fun onBindHeaderViewHolder(holderOrFooter: BaseViewHolder<*>) {
 
     }
 
-    open fun onBindFooterViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
+    open fun onBindFooterViewHolder(holderOrFooter: BaseViewHolder<*>) {
 
     }
 

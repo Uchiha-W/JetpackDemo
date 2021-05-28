@@ -5,7 +5,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.base.BaseAdapter
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.base.BaseViewHolder
-import com.hwei.lib_common.base.HeaderOrFooterViewHolder
 import com.hwei.lib_common.ktx.showToast
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.router.SystemRouter
@@ -33,12 +32,12 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
                 holder.binding.tvTitle.text = datas[position]
             }
 
-            override fun onBindHeaderViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
+            override fun onBindHeaderViewHolder(holderOrFooter: BaseViewHolder<*>) {
                 val itemHeaderBinding = holderOrFooter.binding as ItemHeaderBinding
                 itemHeaderBinding.tvTitle.text = "i am header"
             }
 
-            override fun onBindFooterViewHolder(holderOrFooter: HeaderOrFooterViewHolder<*>) {
+            override fun onBindFooterViewHolder(holderOrFooter: BaseViewHolder<*>) {
                 holderOrFooter.binding.setVariable(BR.title, "i am footer")
             }
         }
