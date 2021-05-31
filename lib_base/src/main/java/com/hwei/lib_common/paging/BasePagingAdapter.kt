@@ -30,7 +30,7 @@ abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
         return BaseViewHolder(binding).apply {
             this.binding.root.setOnClickListener {
                 getItem(absoluteAdapterPosition)?.let { item ->
-                    onItemClickListener?.onClick(it, item, layoutPosition)
+                    onItemClickListener?.onClick(it, item, absoluteAdapterPosition)
                 }
             }
             this.binding.root.setOnLongClickListener {

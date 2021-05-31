@@ -19,7 +19,7 @@ class HomeAdapter @Inject constructor() :
     }
 }
 
-val DIFF_CALL = object : DiffUtil.ItemCallback<Article>() {
+private val DIFF_CALL = object : DiffUtil.ItemCallback<Article>() {
     override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
         return oldItem.id == newItem.id
     }

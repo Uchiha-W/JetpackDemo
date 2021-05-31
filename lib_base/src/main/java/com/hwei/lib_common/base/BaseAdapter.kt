@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.listener.OnItemLongClickListener
 
-abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil.ItemCallback<T>) :
+    ListAdapter<T, RecyclerView.ViewHolder>(itemCallback) {
 
-    protected val datas = mutableListOf<T>()
     private var onItemClickListener: OnItemClickListener<T>? = null
     private var onItemLongClickListener: OnItemLongClickListener<T>? = null
     private var headerLayoutId: Int = View.NO_ID
@@ -51,7 +52,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
                     if (haveHeader()) absoluteAdapterPosition - 1 else absoluteAdapterPosition
                 onItemClickListener?.onClick(
                     it,
-                    datas[position],
+                    currentList[position],
                     position
                 )
             }
@@ -60,7 +61,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
                     if (haveHeader()) absoluteAdapterPosition - 1 else absoluteAdapterPosition
                 onItemLongClickListener?.onLongClick(
                     it,
-                    datas[position],
+                    currentList[position],
                     position
                 ) ?: false
             }
@@ -92,7 +93,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
     }
 
     override fun getItemCount(): Int {
-        var size = datas.size
+        var size = currentList.size
         if (haveHeader()) {
             size++
         }
@@ -129,19 +130,6 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any> :
             return type_footer
         }
         return type_normal
-    }
-
-    fun setData(list: MutableList<T>) {
-        this.datas.apply {
-            clear()
-            addAll(list)
-        }
-        notifyDataSetChanged()
-    }
-
-    fun addData(list: MutableList<T>) {
-        this.datas.addAll(list)
-        notifyDataSetChanged()
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener<T>) {
