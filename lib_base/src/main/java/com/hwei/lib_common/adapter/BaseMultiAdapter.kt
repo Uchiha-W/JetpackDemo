@@ -54,7 +54,7 @@ abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>)
                 false
             )
         }
-        return null
+        throw NullPointerException("check MultiItem has add all?")
     }
 
     final override fun onBindExtendsViewHolder(
