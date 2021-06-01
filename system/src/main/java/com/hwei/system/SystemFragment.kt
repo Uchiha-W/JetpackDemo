@@ -2,18 +2,18 @@ package com.hwei.system
 
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hwei.lib_common.base.BaseAdapter
+import com.hwei.lib_common.adapter.BaseMultiAdapter
 import com.hwei.lib_common.base.BaseFragment
 import com.hwei.lib_common.ktx.showToast
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.router.SystemRouter
 import com.hwei.system.adapter.SystemAdapter
+import com.hwei.system.adapter.SystemBean
 import com.hwei.system.databinding.FragmentSystemBinding
-import com.hwei.system.databinding.ItemBinding
 
 @Route(path = SystemRouter.system)
 class SystemFragment : BaseFragment<FragmentSystemBinding>() {
-    lateinit var adapter: BaseAdapter<ItemBinding, String>
+    lateinit var adapter: BaseMultiAdapter<SystemBean>
     override fun setLayoutId(): Int {
         return R.layout.fragment_system
     }
@@ -22,13 +22,19 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
         adapter = SystemAdapter()
         adapter.addFooterView(R.layout.item_footer)
         adapter.addHeaderView(R.layout.item_header)
-        adapter.setOnItemClickListener(object : OnItemClickListener<String> {
-            override fun onClick(v: View, item: String, position: Int) {
-                showToast(item)
+        adapter.setOnItemClickListener(object : OnItemClickListener<SystemBean> {
+            override fun onClick(v: View, item: SystemBean, position: Int) {
+                showToast(item.content)
             }
         })
         binding.recyclerView.adapter = adapter
-        adapter.submitList(mutableListOf("1", "2", "3", "4", "4", "5"))
+        val list = mutableListOf<SystemBean>()
+        list.add(SystemBean(2, 1, "2"))
+        list.add(SystemBean(3, 1, "3"))
+        list.add(SystemBean(5, 2, "5"))
+        list.add(SystemBean(6, 2, "6"))
+        list.add(SystemBean(7, 1, "7"))
+        adapter.submitList(list)
     }
 
     override fun initView() {

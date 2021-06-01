@@ -1,4 +1,4 @@
-package com.hwei.lib_common.base
+package com.hwei.lib_common.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +9,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.listener.OnItemLongClickListener
 
 abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil.ItemCallback<T>) :
-    ListAdapter<T, RecyclerView.ViewHolder>(itemCallback) {
+    ListAdapter<T, RecyclerView.ViewHolder>(itemCallback), IMultiSupport {
 
     private var onItemClickListener: OnItemClickListener<T>? = null
     private var onItemLongClickListener: OnItemLongClickListener<T>? = null
@@ -21,9 +22,9 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
     private var footerLayoutId: Int = View.NO_ID
 
     private companion object {
-        private const val type_header = 0
-        private const val type_normal = 1
-        private const val type_footer = 2
+        private const val type_header = 10000
+        private const val type_normal = 10001
+        private const val type_footer = 10002
     }
 
     @LayoutRes
@@ -40,13 +41,17 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
             return BaseViewHolder(viewDataBinding)
         }
 
-        val binding = DataBindingUtil.inflate<VB>(
-            LayoutInflater.from(parent.context),
-            setLayoutId(),
-            parent,
-            false
-        )
-        return BaseViewHolder(binding).apply {
+        var binding = if (isSupportMulti()) {
+            onCreateMultiViewBinding(parent, viewType)
+        } else {
+            DataBindingUtil.inflate<VB>(
+                LayoutInflater.from(parent.context),
+                setLayoutId(),
+                parent,
+                false
+            )
+        }
+        return BaseViewHolder(binding!!).apply {
             this.binding.root.setOnClickListener {
                 val position =
                     if (haveHeader()) absoluteAdapterPosition - 1 else absoluteAdapterPosition
@@ -73,6 +78,11 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
             onBindHeaderViewHolder(holder as BaseViewHolder<*>)
         } else if (position == itemCount - 1 && haveFooter()) {
             onBindFooterViewHolder(holder as BaseViewHolder<*>)
+        } else if (isSupportMulti()) {
+            onBindMultiViewHolder(
+                holder as BaseViewHolder<*>,
+                if (haveHeader()) position - 1 else position
+            )
         } else {
             onBindExtendsViewHolder(
                 holder as BaseViewHolder<VB>,
@@ -83,14 +93,20 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
 
     abstract fun onBindExtendsViewHolder(holder: BaseViewHolder<VB>, position: Int)
 
-
+    /**
+     * header布局绑定
+     */
     open fun onBindHeaderViewHolder(headerViewHolder: BaseViewHolder<*>) {
 
     }
 
+    /**
+     * footer布局绑定
+     */
     open fun onBindFooterViewHolder(footerViewHolder: BaseViewHolder<*>) {
 
     }
+
 
     override fun getItemCount(): Int {
         var size = currentList.size
@@ -129,8 +145,12 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
         if (position == itemCount - 1 && haveFooter()) {
             return type_footer
         }
+        if (isSupportMulti()) {
+            return getItemMultiViewType(if (haveHeader()) position - 1 else position)
+        }
         return type_normal
     }
+
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener<T>) {
         this.onItemClickListener = onItemClickListener
@@ -139,4 +159,21 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
     fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener<T>) {
         this.onItemLongClickListener = onItemLongClickListener
     }
+
+    override fun isSupportMulti(): Boolean {
+        return false
+    }
+
+    override fun getItemMultiViewType(position: Int): Int {
+        return -1
+    }
+
+    override fun onCreateMultiViewBinding(parent: ViewGroup, viewType: Int): ViewDataBinding? {
+        return null
+    }
+
+    override fun onBindMultiViewHolder(holder: BaseViewHolder<*>, position: Int) {
+
+    }
+
 }

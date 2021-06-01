@@ -1,23 +1,18 @@
 package com.hwei.system.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.hwei.lib_common.base.BaseAdapter
+import com.hwei.lib_common.adapter.BaseMultiAdapter
+import com.hwei.lib_common.adapter.MultiItem
 import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.system.BR
 import com.hwei.system.R
-import com.hwei.system.databinding.ItemBinding
 import com.hwei.system.databinding.ItemHeaderBinding
 
-class SystemAdapter : BaseAdapter<ItemBinding, String>(DIFF_CALLBACK) {
-    override fun setLayoutId(): Int {
-        return R.layout.item_
-    }
+class SystemAdapter : BaseMultiAdapter<SystemBean>(DIFF_CALLBACK) {
 
-    override fun onBindExtendsViewHolder(
-        holder: BaseViewHolder<ItemBinding>,
-        position: Int
-    ) {
-        holder.binding.tvTitle.text = currentList[position]
+    init {
+        addMultiItem(MultiItem(1, R.layout.item_))
+        addMultiItem(MultiItem(2, R.layout.item_image))
     }
 
     override fun onBindHeaderViewHolder(headerViewHolder: BaseViewHolder<*>) {
@@ -28,14 +23,21 @@ class SystemAdapter : BaseAdapter<ItemBinding, String>(DIFF_CALLBACK) {
     override fun onBindFooterViewHolder(footerViewHolder: BaseViewHolder<*>) {
         footerViewHolder.binding.setVariable(BR.title, "i am footer")
     }
+
+    override fun onBindExtendMultiViewHolder(holder: BaseViewHolder<*>, position: Int) {
+        when (currentList[position].viewType) {
+            1 -> holder.binding.setVariable(BR.title, currentList[position].content)
+            2 -> holder.binding.setVariable(BR.drawableRes, R.drawable.ic_system)
+        }
+    }
 }
 
-private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<String>() {
-    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-        return oldItem == newItem
+private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SystemBean>() {
+    override fun areItemsTheSame(oldItem: SystemBean, newItem: SystemBean): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+    override fun areContentsTheSame(oldItem: SystemBean, newItem: SystemBean): Boolean {
         return oldItem == newItem
     }
 }

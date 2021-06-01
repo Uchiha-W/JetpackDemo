@@ -9,5 +9,9 @@ import com.hwei.lib_common.ktx.load
 fun setImageSrc(imageView: ImageView, uri: String) {
     imageView.load(imageView.context, uri)
 }
+@BindingAdapter("drawableRes")
+fun setImageDrawable(imageView: ImageView, uri: Int) {
+    imageView.load(imageView.context, uri)
+}
 
 
