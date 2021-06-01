@@ -16,8 +16,8 @@ import com.hwei.lib_common.base.BaseViewHolder
  *
  * SystemAdapter : BaseMultiAdapter<SystemBean>{
  *      init {
- *           addMultiItem(MultiItem(1, R.layout.item_))
- *           addMultiItem(MultiItem(2, R.layout.item_image))
+ *           addMultiItem(1 to R.layout.item_)
+ *           addMultiItem(2 to R.layout.item_image)
  *           }
  *
  *      override fun onBindExtendsViewHolder(holder: BaseViewHolder<ViewDataBinding>, position: Int) {
@@ -32,7 +32,7 @@ import com.hwei.lib_common.base.BaseViewHolder
 abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>) :
     BaseAdapter<ViewDataBinding, T>(itemCallback) {
 
-    private var list = mutableListOf<MultiItem>()
+    private val multiItemMap = mutableMapOf<Int, Int>()
 
     final override fun setLayoutId(): Int {
         return View.NO_ID
@@ -46,13 +46,17 @@ abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>)
         parent: ViewGroup,
         viewType: Int
     ): ViewDataBinding? {
-        list.find { viewType == it.viewType }?.apply {
-            return DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                layoutId,
-                parent,
-                false
-            )
+        multiItemMap.keys.find {
+            it == viewType
+        }?.let {
+            return multiItemMap[it]?.let { it1 ->
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    it1,
+                    parent,
+                    false
+                )
+            }
         }
         throw NullPointerException("check MultiItem has add all?")
     }
@@ -71,7 +75,7 @@ abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>)
         onBindExtendMultiViewHolder(holder, position)
     }
 
-    abstract fun onBindExtendMultiViewHolder(headerViewHolder: BaseViewHolder<*>, position: Int)
+    abstract fun onBindExtendMultiViewHolder(holder: BaseViewHolder<*>, position: Int)
 
     final override fun getItemMultiViewType(position: Int): Int {
         currentList[position].apply {
@@ -82,7 +86,11 @@ abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>)
         return -1
     }
 
-    fun addMultiItem(multiItem: MultiItem) {
-        list.add(multiItem)
+    /**
+     * first : viewType
+     * second : layoutId
+     */
+    fun addMultiItem(pair: Pair<Int, Int>) {
+        multiItemMap[pair.first] = pair.second
     }
 }

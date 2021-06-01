@@ -2,7 +2,6 @@ package com.hwei.system.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.hwei.lib_common.adapter.BaseMultiAdapter
-import com.hwei.lib_common.adapter.MultiItem
 import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.system.BR
 import com.hwei.system.R
@@ -11,8 +10,8 @@ import com.hwei.system.databinding.ItemHeaderBinding
 class SystemAdapter : BaseMultiAdapter<SystemBean>(DIFF_CALLBACK) {
 
     init {
-        addMultiItem(MultiItem(1, R.layout.item_))
-        addMultiItem(MultiItem(2, R.layout.item_image))
+        addMultiItem(1 to R.layout.item_)
+        addMultiItem(2 to R.layout.item_image)
     }
 
     override fun onBindHeaderViewHolder(headerViewHolder: BaseViewHolder<*>) {
