@@ -25,6 +25,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes {
+        debug {
+            
+        }
+        release {
+
+        }
+    }
+    productFlavors {
+        one {
+            dimension 'dimens'
+            buildConfigField "String", "BASE_URL", "\"https://www.wanandroid.com\""
+        }
+        two {
+            dimension 'dimens'
+            buildConfigField "String", "BASE_URL", "\"https://www.wanandroid.com\""
+        }
+    }
+    flavorDimensions 'dimens'
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

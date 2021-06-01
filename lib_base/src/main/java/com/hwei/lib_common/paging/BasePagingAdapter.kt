@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.listener.OnItemLongClickListener

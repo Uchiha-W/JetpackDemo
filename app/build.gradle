@@ -23,23 +23,7 @@ android {
         applicationId "com.hwei.demo"
         signingConfig signingConfigs.'default'
     }
-    buildTypes {
-        debug {
 
-        }
-        release {
-
-        }
-    }
-    productFlavors {
-        one {
-            dimension 'dimens'
-        }
-        two {
-            dimension 'dimens'
-        }
-    }
-    flavorDimensions 'dimens'
     android.applicationVariants.all {
         variant ->
             variant.outputs.all {

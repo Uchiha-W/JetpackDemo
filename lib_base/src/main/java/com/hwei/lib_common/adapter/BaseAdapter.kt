@@ -41,7 +41,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
             return BaseViewHolder(viewDataBinding)
         }
 
-        var binding = if (isSupportMulti()) {
+        val binding = if (isSupportMulti()) {
             onCreateMultiViewBinding(parent, viewType)
         } else {
             DataBindingUtil.inflate<VB>(

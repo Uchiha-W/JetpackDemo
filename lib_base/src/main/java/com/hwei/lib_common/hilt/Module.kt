@@ -17,8 +17,10 @@ import javax.inject.Inject
 @Module
 @InstallIn(SingletonComponent::class)
 class Module {
-    private val BASE_URL = "https://www.wanandroid.com"
-    private val OTHER_URL = ""
+    companion object {
+        private const val BASE_URL = BuildConfig.BASE_URL
+        private const val OTHER_URL = ""
+    }
 
     @Provides
     @Inject fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
