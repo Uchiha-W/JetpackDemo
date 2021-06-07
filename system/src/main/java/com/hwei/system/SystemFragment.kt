@@ -1,6 +1,7 @@
 package com.hwei.system
 
 import android.view.View
+import androidx.recyclerview.widget.ConcatAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.adapter.BaseMultiAdapter
 import com.hwei.lib_common.base.BaseFragment
@@ -22,6 +23,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
         adapter = SystemAdapter()
         adapter.addFooterView(R.layout.item_footer)
         adapter.addHeaderView(R.layout.item_header)
+        adapter.setEmptyView(R.layout.item_empty)
         adapter.setOnItemClickListener(object : OnItemClickListener<SystemBean> {
             override fun onClick(v: View, item: SystemBean, position: Int) {
                 showToast(item.content)

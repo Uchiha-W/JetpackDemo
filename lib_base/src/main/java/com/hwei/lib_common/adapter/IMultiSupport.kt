@@ -1,15 +1,14 @@
 package com.hwei.lib_common.adapter
 
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
-import com.hwei.lib_common.base.BaseViewHolder
+import androidx.annotation.LayoutRes
 
 interface IMultiSupport {
 
     /**
      * 是否支持多布局
      */
-    fun isSupportMulti():Boolean
+    fun isSupportMulti(): Boolean
 
     /**
      * 多布局viewType
@@ -19,10 +18,6 @@ interface IMultiSupport {
     /**
      * 在这里创建多布局
      */
-    fun onCreateMultiViewBinding(parent: ViewGroup, viewType: Int): ViewDataBinding?
-
-    /**
-     * 多布局绑定数据
-     */
-    fun onBindMultiViewHolder(holder: BaseViewHolder<*>, position: Int)
+    @LayoutRes
+    fun onCreateMultiViewBinding(parent: ViewGroup, viewType: Int): Int
 }

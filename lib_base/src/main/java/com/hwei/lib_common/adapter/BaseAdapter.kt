@@ -20,21 +20,33 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
     private var onItemLongClickListener: OnItemLongClickListener<T>? = null
     private var headerLayoutId: Int = View.NO_ID
     private var footerLayoutId: Int = View.NO_ID
+    private var emptyLayoutId: Int = View.NO_ID
 
     private companion object {
         private const val type_header = 10000
         private const val type_normal = 10001
-        private const val type_footer = 10002
+        private const val type_empty = 10002
+        private const val type_footer = 10003
     }
 
     @LayoutRes
     abstract fun setLayoutId(): Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == type_header || viewType == type_footer) {
+        if (viewType == type_header || viewType == type_footer || viewType == type_empty) {
             val viewDataBinding: ViewDataBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                if (viewType == type_header) headerLayoutId else footerLayoutId,
+                when (viewType) {
+                    type_header -> {
+                        headerLayoutId
+                    }
+                    type_footer -> {
+                        footerLayoutId
+                    }
+                    else -> {
+                        emptyLayoutId
+                    }
+                },
                 parent,
                 false
             )
@@ -42,7 +54,12 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
         }
 
         val binding = if (isSupportMulti()) {
-            onCreateMultiViewBinding(parent, viewType)
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                onCreateMultiViewBinding(parent, viewType),
+                parent,
+                false
+            )
         } else {
             DataBindingUtil.inflate<VB>(
                 LayoutInflater.from(parent.context),
@@ -74,15 +91,12 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position == 0 && haveHeader()) {
+        if (isShowEmptyView()) {
+            onBindEmptyViewHolder(holder as BaseViewHolder<*>)
+        } else if (position == 0 && haveHeader()) {
             onBindHeaderViewHolder(holder as BaseViewHolder<*>)
         } else if (position == itemCount - 1 && haveFooter()) {
             onBindFooterViewHolder(holder as BaseViewHolder<*>)
-        } else if (isSupportMulti()) {
-            onBindMultiViewHolder(
-                holder as BaseViewHolder<*>,
-                if (haveHeader()) position - 1 else position
-            )
         } else {
             onBindExtendsViewHolder(
                 holder as BaseViewHolder<VB>,
@@ -107,9 +121,19 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
 
     }
 
+    /**
+     * 空布局绑定
+     */
+    open fun onBindEmptyViewHolder(emptyViewHolder: BaseViewHolder<*>) {
+
+    }
 
     override fun getItemCount(): Int {
+        super.getItemCount()
         var size = currentList.size
+        if (isShowEmptyView()) {
+            return size + 1
+        }
         if (haveHeader()) {
             size++
         }
@@ -119,6 +143,23 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
         return size
     }
 
+    /**
+     * 是否显示空布局
+     */
+    private fun isShowEmptyView(): Boolean {
+        return currentList.size == 0 && emptyLayoutId != View.NO_ID
+    }
+
+    /**
+     * 设置空布局
+     */
+    fun setEmptyView(emptyLayoutId: Int) {
+        this.emptyLayoutId = emptyLayoutId
+    }
+
+    /**
+     * 设置头布局
+     */
     fun addHeaderView(headerLayoutId: Int) {
         this.headerLayoutId = headerLayoutId
     }
@@ -127,6 +168,9 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
         this.headerLayoutId = View.NO_ID
     }
 
+    /**
+     * 设置尾布局
+     */
     fun addFooterView(footerLayoutId: Int) {
         this.footerLayoutId = footerLayoutId
     }
@@ -139,6 +183,9 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
     private fun haveFooter() = footerLayoutId != View.NO_ID
 
     override fun getItemViewType(position: Int): Int {
+        if (isShowEmptyView()) {
+            return type_empty
+        }
         if (position == 0 && haveHeader()) {
             return type_header
         }
@@ -168,12 +215,7 @@ abstract class BaseAdapter<VB : ViewDataBinding, T : Any>(itemCallback: DiffUtil
         return -1
     }
 
-    override fun onCreateMultiViewBinding(parent: ViewGroup, viewType: Int): ViewDataBinding? {
-        return null
+    override fun onCreateMultiViewBinding(parent: ViewGroup, viewType: Int): Int {
+        return View.NO_ID
     }
-
-    override fun onBindMultiViewHolder(holder: BaseViewHolder<*>, position: Int) {
-
-    }
-
 }

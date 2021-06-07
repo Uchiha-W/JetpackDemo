@@ -1,12 +1,9 @@
 package com.hwei.lib_common.adapter
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
-import com.hwei.lib_common.base.BaseViewHolder
 
 /**
  * 支持多布局Adapter
@@ -20,12 +17,12 @@ import com.hwei.lib_common.base.BaseViewHolder
  *           addMultiItem(2 to R.layout.item_image)
  *           }
  *
- *      override fun onBindExtendsViewHolder(holder: BaseViewHolder<ViewDataBinding>, position: Int) {
- *           when (currentList[position].viewType) {
- *           1 -> holder.binding.setVariable(BR.title, currentList[position].content)
- *           2 -> holder.binding.setVariable(BR.drawableRes, R.drawable.ic_system)
- *           }
- *       }
+ *     override fun onBindExtendsViewHolder(holder: BaseViewHolder<ViewDataBinding>, position: Int) {
+            when (currentList[position].viewType) {
+                1 -> holder.binding.setVariable(BR.title, currentList[position].content)
+                2 -> holder.binding.setVariable(BR.drawableRes, R.drawable.ic_system)
+                }
+             }
  *   }
  *
  */
@@ -38,44 +35,22 @@ abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>)
         return View.NO_ID
     }
 
-    override fun isSupportMulti(): Boolean {
+    final override fun isSupportMulti(): Boolean {
         return true
     }
 
     final override fun onCreateMultiViewBinding(
         parent: ViewGroup,
         viewType: Int
-    ): ViewDataBinding? {
+    ): Int {
         multiItemMap.keys.find {
             it == viewType
         }?.let {
-            return multiItemMap[it]?.let { it1 ->
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    it1,
-                    parent,
-                    false
-                )
-            }
+            return multiItemMap[it]!!
         }
         throw NullPointerException("check MultiItem has add all?")
     }
 
-    final override fun onBindExtendsViewHolder(
-        holder: BaseViewHolder<ViewDataBinding>,
-        position: Int
-    ) {
-
-    }
-
-    override fun onBindMultiViewHolder(
-        holder: BaseViewHolder<*>,
-        position: Int
-    ) {
-        onBindExtendMultiViewHolder(holder, position)
-    }
-
-    abstract fun onBindExtendMultiViewHolder(holder: BaseViewHolder<*>, position: Int)
 
     final override fun getItemMultiViewType(position: Int): Int {
         currentList[position].apply {
@@ -83,7 +58,7 @@ abstract class BaseMultiAdapter<T : Any>(itemCallback: DiffUtil.ItemCallback<T>)
                 return this.viewType
             }
         }
-        return -1
+        throw NullPointerException("check your bean has implements IMultiBean?")
     }
 
     /**

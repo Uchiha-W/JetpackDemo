@@ -1,5 +1,7 @@
 package com.hwei.home.bean
 
+import com.hwei.lib_common.adapter.IMultiBean
+
 data class Article(
     val apkLink: String,
     val audit: Int,
@@ -34,4 +36,7 @@ data class Article(
     val userId: Int,
     val visible: Int,
     val zan: Int
-)
+):IMultiBean {
+    override val viewType: Int
+        get() = 1
+}

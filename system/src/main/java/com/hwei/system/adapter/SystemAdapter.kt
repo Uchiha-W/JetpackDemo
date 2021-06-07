@@ -1,10 +1,12 @@
 package com.hwei.system.adapter
 
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.hwei.lib_common.adapter.BaseMultiAdapter
 import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.system.BR
 import com.hwei.system.R
+import com.hwei.system.databinding.ItemEmptyBinding
 import com.hwei.system.databinding.ItemHeaderBinding
 
 class SystemAdapter : BaseMultiAdapter<SystemBean>(DIFF_CALLBACK) {
@@ -23,7 +25,13 @@ class SystemAdapter : BaseMultiAdapter<SystemBean>(DIFF_CALLBACK) {
         footerViewHolder.binding.setVariable(BR.title, "i am footer")
     }
 
-    override fun onBindExtendMultiViewHolder(holder: BaseViewHolder<*>, position: Int) {
+
+    override fun onBindEmptyViewHolder(emptyViewHolder: BaseViewHolder<*>) {
+        val binding = emptyViewHolder.binding as ItemEmptyBinding
+        binding.tvValue.text = "i am empty"
+    }
+
+    override fun onBindExtendsViewHolder(holder: BaseViewHolder<ViewDataBinding>, position: Int) {
         when (currentList[position].viewType) {
             1 -> holder.binding.setVariable(BR.title, currentList[position].content)
             2 -> holder.binding.setVariable(BR.drawableRes, R.drawable.ic_system)
