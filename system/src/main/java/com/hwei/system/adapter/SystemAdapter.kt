@@ -6,8 +6,10 @@ import com.hwei.lib_common.adapter.BaseMultiAdapter
 import com.hwei.lib_common.base.BaseViewHolder
 import com.hwei.system.BR
 import com.hwei.system.R
+import com.hwei.system.databinding.ItemBinding
 import com.hwei.system.databinding.ItemEmptyBinding
 import com.hwei.system.databinding.ItemHeaderBinding
+import com.hwei.system.databinding.ItemImageBinding
 
 class SystemAdapter : BaseMultiAdapter<SystemBean>(DIFF_CALLBACK) {
 
@@ -32,9 +34,15 @@ class SystemAdapter : BaseMultiAdapter<SystemBean>(DIFF_CALLBACK) {
     }
 
     override fun onBindExtendsViewHolder(holder: BaseViewHolder<ViewDataBinding>, position: Int) {
-        when (currentList[position].viewType) {
-            1 -> holder.binding.setVariable(BR.title, currentList[position].content)
-            2 -> holder.binding.setVariable(BR.drawableRes, R.drawable.ic_system)
+        when (holder.binding) {
+            is ItemBinding -> {
+                val binding = holder.binding as ItemBinding
+                binding.tvTitle.text = currentList[position].content
+            }
+            is ItemImageBinding -> {
+                val binding = holder.binding as ItemImageBinding
+                binding.iv.setImageResource(R.drawable.ic_system)
+            }
         }
     }
 }
