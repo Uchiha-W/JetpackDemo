@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.hwei.home.bean.BannerBean
+import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.net.request
 import com.hwei.lib_common.paging.BasePageDataSource
 import com.hwei.lib_common.paging.PagingConfigFactory
@@ -11,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : BaseViewModel() {
 
     private val _bannerData = MutableLiveData<List<BannerBean>>()
     val bannerData: LiveData<List<BannerBean>>

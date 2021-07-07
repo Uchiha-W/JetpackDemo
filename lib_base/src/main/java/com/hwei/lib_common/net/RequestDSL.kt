@@ -1,7 +1,7 @@
 package com.hwei.lib_common.net
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.ktx.showToast
 import com.hwei.lib_common.net.base.Resource
 import kotlinx.coroutines.CancellationException
@@ -32,11 +32,12 @@ abstract class RequestDSL<T> {
     abstract fun build()
 }
 
-fun <T> ViewModel.request(block: RequestDSL<T>.() -> Unit) {
+fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>.() -> Unit) {
     return object : RequestDSL<T>() {
         override fun build() {
             viewModelScope.launch {
                 try {
+                    showLoadingLiveData.value = true
                     onRequest?.invoke(this).apply {
                         when (this) {
                             is Resource.Success -> onSuccess?.invoke(this.data())
@@ -53,6 +54,7 @@ fun <T> ViewModel.request(block: RequestDSL<T>.() -> Unit) {
                     }
                 } finally {
                     onComplete?.invoke()
+                    showLoadingLiveData.value = false
                 }
             }
         }

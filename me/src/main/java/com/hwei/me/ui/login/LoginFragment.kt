@@ -3,6 +3,7 @@ package com.hwei.me.ui.login
 import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.base.BaseFragment
+import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.me.R
 import com.hwei.me.databinding.FragmentLoginBinding
@@ -32,4 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun setLayoutId(): Int {
         return R.layout.fragment_login
     }
+
+    override val vm: BaseViewModel?
+        get() = loginViewModel
 }

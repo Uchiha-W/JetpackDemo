@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_common.adapter.BaseMultiAdapter
 import com.hwei.lib_common.base.BaseFragment
+import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.ktx.showToast
 import com.hwei.lib_common.listener.OnItemClickListener
 import com.hwei.lib_common.router.SystemRouter
@@ -42,4 +43,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
     override fun initView() {
 
     }
+
+    override val vm: BaseViewModel?
+        get() = null
 }

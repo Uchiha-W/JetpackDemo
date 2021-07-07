@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.lib_common.base.BaseFragment
+import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.me.R
 import com.hwei.me.databinding.FragmentMeBinding
@@ -59,4 +60,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             currentFragment = fragment
         }
     }
+
+    override val vm: BaseViewModel?
+        get() = null
 }
