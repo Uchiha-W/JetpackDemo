@@ -60,7 +60,4 @@ class MeFragment : BaseFragment<FragmentMeBinding>() {
             currentFragment = fragment
         }
     }
-
-    override val vm: BaseViewModel?
-        get() = null
 }

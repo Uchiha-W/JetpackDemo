@@ -43,7 +43,4 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
     override fun initView() {
 
     }
-
-    override val vm: BaseViewModel?
-        get() = null
 }

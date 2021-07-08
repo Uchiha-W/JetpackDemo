@@ -12,7 +12,6 @@ import com.hwei.home.bean.Article
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.databinding.FragmentHomeBinding
 import com.hwei.lib_common.base.BaseFragment
-import com.hwei.lib_common.base.BaseViewModel
 import com.hwei.lib_common.ktx.load
 import com.hwei.lib_common.ktx.showToast
 import com.hwei.lib_common.listener.OnItemClickListener
@@ -63,6 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initView() {
+        observeLoading(homeViewModel)
         binding.recyclerView.apply {
             adapter = homeAdapter
         }
@@ -85,7 +85,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         })
     }
-
-    override val vm: BaseViewModel?
-        get() = homeViewModel
 }

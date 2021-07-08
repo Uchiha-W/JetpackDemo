@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     lateinit var binding: T
     lateinit var mContext: Context
-    abstract val vm: BaseViewModel?
     private var showingLoading = AtomicInteger(0)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,16 +24,15 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         mContext = requireContext()
         initView()
         initData()
-        initListener()
         return binding.root
     }
 
-    abstract fun initData()
-
     abstract fun initView()
 
-    private fun initListener() {
-        vm?.let { it ->
+    abstract fun initData()
+
+    protected fun observeLoading(vm: BaseViewModel) {
+        vm.let { it ->
             it.showLoadingLiveData.observe(viewLifecycleOwner) {
                 if (it) {
                     startLoading()

@@ -33,7 +33,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun setLayoutId(): Int {
         return R.layout.fragment_login
     }
-
-    override val vm: BaseViewModel?
-        get() = loginViewModel
 }
