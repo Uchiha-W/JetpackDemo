@@ -44,15 +44,13 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     }
 
     private fun startLoading() {
-        showingLoading.incrementAndGet()
-        if (showingLoading.get() == 1) {
+        if (showingLoading.incrementAndGet() == 1) {
             //todo: show a loading dialog
         }
     }
 
     private fun stopLoading() {
-        showingLoading.decrementAndGet()
-        if (showingLoading.get() == 0) {
+        if (showingLoading.decrementAndGet() == 0) {
             //todo: hide a loading dialog
         }
     }

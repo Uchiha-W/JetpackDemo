@@ -37,7 +37,9 @@ fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>
         override fun build() {
             viewModelScope.launch {
                 try {
-                    showLoadingLiveData.value = true
+                    if (showLoading) {
+                        showLoadingLiveData.value = true
+                    }
                     onRequest?.invoke(this).apply {
                         when (this) {
                             is Resource.Success -> onSuccess?.invoke(this.data())
@@ -54,7 +56,9 @@ fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>
                     }
                 } finally {
                     onComplete?.invoke()
-                    showLoadingLiveData.value = false
+                    if (showLoading) {
+                        showLoadingLiveData.value = false
+                    }
                 }
             }
         }
