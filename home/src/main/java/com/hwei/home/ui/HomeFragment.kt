@@ -69,13 +69,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.smartRefreshLayout.setOnRefreshListener {
             homeAdapter.refresh()
         }
+        binding.smartRefreshLayout.setOnLoadMoreListener {
+            homeAdapter.retry()
+        }
         homeAdapter.addLoadStateListener {
             when (it.refresh) {
                 is LoadState.Loading -> null
-                is LoadState.Error -> showToast(
-                    (it.refresh as LoadState.Error).error.message ?: "unknown error"
-                )
-                is LoadState.NotLoading -> null
+                is LoadState.Error -> {
+                    binding.smartRefreshLayout.finishRefresh(false)
+                    showToast((it.refresh as LoadState.Error).error.message ?: "unknown error")
+                }
+                is LoadState.NotLoading -> {
+                    binding.smartRefreshLayout.finishRefresh()
+                    if (it.refresh.endOfPaginationReached) {
+                        binding.smartRefreshLayout.finishLoadMoreWithNoMoreData()
+                    }
+                }
+            }
+            when (it.append) {
+                is LoadState.Error -> {
+                    binding.smartRefreshLayout.finishLoadMore(false)
+                }
+                is LoadState.NotLoading -> {
+                    binding.smartRefreshLayout.finishLoadMore()
+                    if (it.append.endOfPaginationReached){
+                        binding.smartRefreshLayout.finishLoadMoreWithNoMoreData()
+                    }
+                }
+                is LoadState.Loading -> null
             }
         }
         homeAdapter.setOnItemClickListener(object : OnItemClickListener<Article> {
