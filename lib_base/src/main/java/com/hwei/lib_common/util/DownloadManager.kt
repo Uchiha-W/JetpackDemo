@@ -1,5 +1,8 @@
 package com.hwei.lib_common.util
 
+import android.os.Handler
+import android.os.Looper
+import androidx.annotation.FloatRange
 import com.hwei.lib_common.BaseApplication
 import okhttp3.*
 import java.io.File
@@ -16,6 +19,8 @@ object DownloadManager {
 
     private val requestList = Collections.synchronizedList<String>(ArrayList())
 
+    private val handler = Handler(Looper.getMainLooper())
+
     private val okHttpClient = OkHttpClient.Builder().callTimeout(30, TimeUnit.SECONDS)
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(300, TimeUnit.SECONDS)
@@ -30,19 +35,20 @@ object DownloadManager {
         onDownLoadListener.onStart()
         okHttpClient.newCall(Request.Builder().url(url).build()).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                onDownLoadListener.onFailure(e)
+                handler.post { onDownLoadListener.onFailure(e) }
                 requestList.remove(url)
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     try {
-                        saveFile(response, fileName, onDownLoadListener)
+                        val file = saveFile(response, fileName, onDownLoadListener)
+                        handler.post { onDownLoadListener.onSuccess(file) }
                     } catch (e: Exception) {
-                        onDownLoadListener.onFailure(e)
+                        handler.post { onDownLoadListener.onFailure(e) }
                     }
                 } else {
-                    onDownLoadListener.onFailure(IOException("下载失败"))
+                    handler.post { onDownLoadListener.onFailure(IOException("下载失败")) }
                 }
                 requestList.remove(url)
             }
@@ -53,7 +59,7 @@ object DownloadManager {
         response: Response,
         fileName: String,
         onDownLoadListener: OnDownLoadListener
-    ) {
+    ): File {
         response.body ?: throw NullPointerException("目标文件不存在")
         File(filepath).mkdirs()
         val file = File(filepath + File.separator + fileName)
@@ -70,11 +76,11 @@ object DownloadManager {
                     output.write(buffer, 0, bytes)
                     bytes = input.read(buffer)
                     currentLength += bytes
-                    onDownLoadListener.onProgress(currentLength * 1f / contentLength)
+                    handler.post { onDownLoadListener.onProgress(currentLength * 1f / contentLength * 100) }
                 }
             }
         }
-        onDownLoadListener.onSuccess(file)
+        return file
     }
 }
 
@@ -82,7 +88,7 @@ interface OnDownLoadListener {
 
     fun onStart()
 
-    fun onProgress(progress: Float)
+    fun onProgress(@FloatRange(from = 0.0, to = 100.0) progress: Float)
 
     fun onFailure(e: Exception)
 
