@@ -1,42 +1,52 @@
 package com.hwei.lib_common.util
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import androidx.core.content.FileProvider
+import com.hwei.lib_common.BaseApplication
 import java.io.File
 
-class AppInstallUtil {
 
-    fun install(context: Context, appFile: File) {
-        val intent: Intent =
-            getInstallAppIntent(context, appFile)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        if (context.packageManager.queryIntentActivities(intent, 0).size > 0) {
-            context.startActivity(intent)
+object AppInstallUtil {
+
+    const val UNKNOW_SOURCE = 10086
+
+    fun installApk(context: Context, apkPath: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val canInstall = context.packageManager.canRequestPackageInstalls()
+            if (canInstall) {
+                installApkInternal(context, apkPath)
+            } else {
+                //"安装应用需要打开安装未知来源应用权限，请去设置中开启权限"
+                val packageUri = Uri.parse("package:" + BaseApplication.context.packageName)
+                val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageUri)
+                (context as Activity).startActivityForResult(intent, UNKNOW_SOURCE)
+            }
+        } else {
+            installApkInternal(context, apkPath)
         }
     }
 
-    private fun getInstallAppIntent(context: Context, appFile: File?): Intent {
+    private fun installApkInternal(context: Context, downloadApk: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val file = File(downloadApk)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            //区别于 FLAG_GRANT_READ_URI_PERMISSION 跟 FLAG_GRANT_WRITE_URI_PERMISSION， URI权限会持久存在即使重启，直到明确的用 revokeUriPermission(Uri, int) 撤销。 这个flag只提供可能持久授权。但是接收的应用必须调用ContentResolver的takePersistableUriPermission(Uri, int)方法实现
-            intent.flags =
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-            val fileUri = FileProvider.getUriForFile(
-                context, context.applicationContext.packageName + ".fileProvider",
-                appFile!!
+            val apkUri = FileProvider.getUriForFile(
+                context,
+                BaseApplication.context.packageName + ".fileprovider",
+                file
             )
-            intent.setDataAndType(fileUri, "application/vnd.android.package-archive")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.setDataAndType(apkUri, "application/vnd.android.package-archive")
         } else {
-            intent.setDataAndType(
-                Uri.fromFile(appFile),
-                "application/vnd.android.package-archive"
-            )
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            val uri = Uri.fromFile(file)
+            intent.setDataAndType(uri, "application/vnd.android.package-archive")
         }
-        return intent
-
+        context.startActivity(intent)
     }
 }
