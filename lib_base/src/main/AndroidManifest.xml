@@ -3,4 +3,11 @@
     package="com.hwei.lib_common">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application >
+        <activity android:name=".camera.CameraActivity"/>
+    </application>
 </manifest>

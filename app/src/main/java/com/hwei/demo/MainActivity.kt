@@ -1,10 +1,12 @@
 package com.hwei.demo
 
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.demo.databinding.ActivityMainBinding
 import com.hwei.lib_common.base.BaseActivity
+import com.hwei.lib_common.router.BaseRouter
 import com.hwei.lib_common.router.HomeRouter
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.lib_common.router.SystemRouter
@@ -38,9 +40,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.bottom_3 -> binding.viewpager.currentItem = 2
                 else -> binding.viewpager.currentItem = 0
             }
-
             true
         }
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+
+        }.launch(android.Manifest.permission.RECORD_AUDIO)
+
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                ARouter.getInstance().build(BaseRouter.camera).navigation()
+            }
+        }.launch(android.Manifest.permission.CAMERA)
+
     }
 
     override fun setLayoutId(): Int {
