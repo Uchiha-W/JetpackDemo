@@ -42,15 +42,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-
-        }.launch(android.Manifest.permission.RECORD_AUDIO)
-
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                ARouter.getInstance().build(BaseRouter.camera).navigation()
-            }
-        }.launch(android.Manifest.permission.CAMERA)
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//
+//        }.launch(android.Manifest.permission.RECORD_AUDIO)
+//
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//            if (it) {
+//                ARouter.getInstance().build(BaseRouter.camera).navigation()
+//            }
+//        }.launch(android.Manifest.permission.CAMERA)
 
     }
 
