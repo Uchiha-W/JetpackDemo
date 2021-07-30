@@ -1,3 +1,4 @@
+include ':custom_calendar'
 include ':lib_base'
 include ':me'
 include ':system'
