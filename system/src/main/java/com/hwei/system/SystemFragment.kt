@@ -1,14 +1,12 @@
 package com.hwei.system
 
 import android.view.View
-import androidx.recyclerview.widget.ConcatAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hwei.lib_common.adapter.BaseMultiAdapter
-import com.hwei.lib_common.base.BaseFragment
-import com.hwei.lib_common.base.BaseViewModel
-import com.hwei.lib_common.ktx.showToast
-import com.hwei.lib_common.listener.OnItemClickListener
-import com.hwei.lib_common.router.SystemRouter
+import com.hwei.lib_base.adapter.BaseMultiAdapter
+import com.hwei.lib_base.base.BaseFragment
+import com.hwei.lib_base.ktx.showToast
+import com.hwei.lib_base.listener.OnItemClickListener
+import com.hwei.lib_base.router.SystemRouter
 import com.hwei.system.adapter.SystemAdapter
 import com.hwei.system.adapter.SystemBean
 import com.hwei.system.databinding.FragmentSystemBinding
@@ -18,6 +16,10 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
     lateinit var adapter: BaseMultiAdapter<SystemBean>
     override fun setLayoutId(): Int {
         return R.layout.fragment_system
+    }
+
+    override fun initView() {
+
     }
 
     override fun initData() {
@@ -40,7 +42,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
         adapter.submitList(list)
     }
 
-    override fun initView() {
+    override fun setEvent() {
 
     }
 }

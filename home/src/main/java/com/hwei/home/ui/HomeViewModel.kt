@@ -4,10 +4,10 @@ import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.hwei.home.bean.BannerBean
-import com.hwei.lib_common.base.BaseViewModel
-import com.hwei.lib_common.net.request
-import com.hwei.lib_common.paging.BasePageDataSource
-import com.hwei.lib_common.paging.PagingConfigFactory
+import com.hwei.lib_base.base.BaseViewModel
+import com.hwei.lib_base.net.request
+import com.hwei.lib_base.paging.BasePageDataSource
+import com.hwei.lib_base.paging.PagingConfigFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

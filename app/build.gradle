@@ -41,5 +41,4 @@ dependencies {
     implementation project(":home")
     implementation project(":system")
     implementation project(":me")
-    implementation project(":custom_calendar")
 }

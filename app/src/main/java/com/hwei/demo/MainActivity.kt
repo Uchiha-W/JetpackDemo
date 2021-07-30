@@ -1,14 +1,13 @@
 package com.hwei.demo
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.demo.databinding.ActivityMainBinding
-import com.hwei.lib_common.base.BaseActivity
-import com.hwei.lib_common.router.HomeRouter
-import com.hwei.lib_common.router.MeRouter
-import com.hwei.lib_common.router.SystemRouter
+import com.hwei.lib_base.base.BaseActivity
+import com.hwei.lib_base.router.HomeRouter
+import com.hwei.lib_base.router.MeRouter
+import com.hwei.lib_base.router.SystemRouter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

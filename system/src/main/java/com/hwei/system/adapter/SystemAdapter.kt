@@ -2,8 +2,8 @@ package com.hwei.system.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
-import com.hwei.lib_common.adapter.BaseMultiAdapter
-import com.hwei.lib_common.base.BaseViewHolder
+import com.hwei.lib_base.adapter.BaseMultiAdapter
+import com.hwei.lib_base.base.BaseViewHolder
 import com.hwei.system.BR
 import com.hwei.system.R
 import com.hwei.system.databinding.ItemBinding

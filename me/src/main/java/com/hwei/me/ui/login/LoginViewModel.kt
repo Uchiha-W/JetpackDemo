@@ -2,9 +2,9 @@ package com.hwei.me.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.hwei.lib_common.base.BaseViewModel
-import com.hwei.lib_common.net.request
-import com.hwei.me.bean.UserBean
+import com.hwei.lib_base.base.BaseViewModel
+import com.hwei.lib_base.net.request
+import com.hwei.lib_common.UserBean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,9 +12,13 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
     BaseViewModel() {
 
-    private val _userBean = MutableLiveData<UserBean>()
-    val userBean: LiveData<UserBean>
-        get() = _userBean
+    private val _loginUserBean = MutableLiveData<UserBean>()
+    val loginUserBean: LiveData<UserBean>
+        get() = _loginUserBean
+
+    private val _registerUserBean = MutableLiveData<UserBean>()
+    val registerUserBean: LiveData<UserBean>
+        get() = _registerUserBean
 
     fun login(username: String, password: String) {
         request<UserBean> {
@@ -22,7 +26,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
                 loginRepository.login(username, password)
             }
             onSuccess {
-                _userBean.value = it
+                _loginUserBean.value = it
             }
 
         }
@@ -34,7 +38,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
                 loginRepository.register(username, password, repassword)
             }
             onSuccess {
-                _userBean.value = it
+                _registerUserBean.value = it
             }
         }
     }

@@ -11,11 +11,11 @@ import com.hwei.home.adapter.HomeAdapter
 import com.hwei.home.bean.Article
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.databinding.FragmentHomeBinding
-import com.hwei.lib_common.base.BaseFragment
-import com.hwei.lib_common.ktx.load
-import com.hwei.lib_common.ktx.showToast
-import com.hwei.lib_common.listener.OnItemClickListener
-import com.hwei.lib_common.router.HomeRouter
+import com.hwei.lib_base.base.BaseFragment
+import com.hwei.lib_base.ktx.load
+import com.hwei.lib_base.ktx.showToast
+import com.hwei.lib_base.listener.OnItemClickListener
+import com.hwei.lib_base.router.HomeRouter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
@@ -33,32 +33,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     lateinit var homeAdapter: HomeAdapter
     override fun setLayoutId(): Int {
         return R.layout.fragment_home
-    }
-
-    override fun initData() {
-        homeViewModel.livePageData.observe(this) {
-            lifecycleScope.launch {
-                binding.smartRefreshLayout.finishRefresh()
-                homeAdapter.submitData(it)
-            }
-        }
-        homeViewModel.bannerData.observe(this) {
-            binding.banner.apply {
-                adapter = object : BannerImageAdapter<BannerBean>(it.toMutableList()) {
-                    override fun onBindView(
-                        holder: BannerImageHolder,
-                        data: BannerBean,
-                        position: Int,
-                        size: Int
-                    ) {
-                        holder.imageView.load(mContext, data.imagePath)
-                    }
-                }
-                addBannerLifecycleObserver(this@HomeFragment)//添加生命周期观察者
-                indicator = CircleIndicator(mContext)
-            }
-        }
-        homeViewModel.getBannerList()
     }
 
     override fun initView() {
@@ -92,7 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
                 is LoadState.NotLoading -> {
                     binding.smartRefreshLayout.finishLoadMore()
-                    if (it.append.endOfPaginationReached){
+                    if (it.append.endOfPaginationReached) {
                         binding.smartRefreshLayout.finishLoadMoreWithNoMoreData()
                     }
                 }
@@ -102,8 +76,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         homeAdapter.setOnItemClickListener(object : OnItemClickListener<Article> {
             override fun onClick(v: View, item: Article, position: Int) {
                 ARouter.getInstance().build(HomeRouter.article).withString("link", item.link)
+                    .withInt("id", item.id)
                     .navigation()
             }
         })
+    }
+
+    override fun initData() {
+        homeViewModel.getBannerList()
+    }
+
+
+    override fun setEvent() {
+        homeViewModel.livePageData.observe(this) {
+            lifecycleScope.launch {
+                binding.smartRefreshLayout.finishRefresh()
+                homeAdapter.submitData(it)
+            }
+        }
+        homeViewModel.bannerData.observe(this) {
+            binding.banner.apply {
+                adapter = object : BannerImageAdapter<BannerBean>(it.toMutableList()) {
+                    override fun onBindView(
+                        holder: BannerImageHolder,
+                        data: BannerBean,
+                        position: Int,
+                        size: Int
+                    ) {
+                        holder.imageView.load(mContext, data.imagePath)
+                    }
+                }
+                addBannerLifecycleObserver(this@HomeFragment)//添加生命周期观察者
+                indicator = CircleIndicator(mContext)
+            }
+        }
     }
 }

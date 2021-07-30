@@ -1,8 +1,8 @@
 package com.hwei.demo
 
 import com.alibaba.android.arouter.launcher.ARouter
-import com.hwei.lib_common.BaseApplication
-import com.hwei.lib_common.util.ScreenAdapterUtil
+import com.hwei.lib_base.BaseApplication
+import com.hwei.lib_base.util.ScreenAdapterUtil
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

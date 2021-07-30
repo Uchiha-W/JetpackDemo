@@ -1,6 +1,6 @@
 package com.hwei.home.bean
 
-import com.hwei.lib_common.adapter.IMultiBean
+import com.hwei.lib_base.adapter.IMultiBean
 
 data class Article(
     val apkLink: String,

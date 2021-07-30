@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,11 +16,12 @@
         android:orientation="vertical"
         tools:context=".ui.article.ArticleActivity">
 
-        <com.hwei.lib_common.widge.CommonTitle
+        <com.hwei.lib_base.widge.CommonTitle
             android:id="@+id/common_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/app_name"/>
+            app:text_right="收藏"
+            app:title="@string/app_name" />
 
         <com.github.lzyzsd.jsbridge.BridgeWebView
             android:id="@+id/webView"
