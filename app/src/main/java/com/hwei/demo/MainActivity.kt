@@ -1,12 +1,11 @@
 package com.hwei.demo
 
-import androidx.activity.result.contract.ActivityResultContracts
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.demo.databinding.ActivityMainBinding
 import com.hwei.lib_common.base.BaseActivity
-import com.hwei.lib_common.router.BaseRouter
 import com.hwei.lib_common.router.HomeRouter
 import com.hwei.lib_common.router.MeRouter
 import com.hwei.lib_common.router.SystemRouter
@@ -42,16 +41,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//
+//        }.launch(android.Manifest.permission.RECORD_AUDIO)
+//
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//            if (it) {
+//                ARouter.getInstance().build(BaseRouter.camera).navigation()
+//            }
+//        }.launch(android.Manifest.permission.CAMERA)
 
-        }.launch(android.Manifest.permission.RECORD_AUDIO)
-
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                ARouter.getInstance().build(BaseRouter.camera).navigation()
-            }
-        }.launch(android.Manifest.permission.CAMERA)
-
+        //startActivity(Intent(this,ComposeActivity::class.java))
     }
 
     override fun setLayoutId(): Int {
