@@ -50,7 +50,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //            }
 //        }.launch(android.Manifest.permission.CAMERA)
 
-        //startActivity(Intent(this,ComposeActivity::class.java))
     }
 
     override fun setLayoutId(): Int {

@@ -6,7 +6,8 @@
         <entry key="..\:/Demo/app/src/main/res/layout/activity_main.xml" value="0.1273965691220989" />
         <entry key="..\:/Demo/home/src/main/res/layout/activity_article.xml" value="0.2028985507246377" />
         <entry key="..\:/Demo/lib_base/src/main/res/layout/layout_common_title.xml" value="0.2028985507246377" />
-        <entry key="..\:/Demo/me/src/main/res/layout/fragement_personal.xml" value="0.3223958333333333" />
+        <entry key="..\:/Demo/me/src/main/res/layout/fragement_personal.xml" value="0.22" />
+        <entry key="..\:/Demo/me/src/main/res/layout/fragment_me.xml" value="0.13496468213925328" />
       </map>
     </option>
   </component>

@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
 @SuppressLint("StaticFieldLeak")
-object SpStorage {
+internal object DateStoreStorage :SpInterface{
 
     private val mContext = BaseApplication.context
 
-    fun <T> setValue(s: String, new: T) {
+    override fun <T> setValue(s: String, new: T) {
         runBlocking {
             val key = getPreferenceKey(s, new)
             mContext.dataStore.edit {
@@ -22,7 +22,7 @@ object SpStorage {
         }
     }
 
-    fun <T> getValue(s: String, default: T): T {
+    override fun <T> getValue(s: String, default: T): T {
         return runBlocking {
             val channel = Channel<T>(1)
             val key = getPreferenceKey(s, default)

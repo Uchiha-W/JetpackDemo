@@ -1,10 +1,9 @@
 package com.hwei.me.net
 
+import com.hwei.lib_base.net.base.BasePage
 import com.hwei.lib_base.net.base.BaseResult
 import com.hwei.lib_common.UserBean
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface MeService {
     @POST("/user/login")
@@ -21,4 +20,7 @@ interface MeService {
         @Field("password") password: String,
         @Field("repassword") repassword: String
     ): BaseResult<UserBean>
+
+    @GET("/lg/collect/list/{page}/json")
+    suspend fun getCollectList(@Path("page") page: Int): BaseResult<BasePage<String>>
 }

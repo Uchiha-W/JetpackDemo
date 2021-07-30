@@ -5,4 +5,5 @@ object MeRouter {
     const val me = "${Group}/me"
     const val login = "${Group}/login"
     const val personal = "${Group}/personal"
+    const val myCollect = "${Group}/my_collect"
 }

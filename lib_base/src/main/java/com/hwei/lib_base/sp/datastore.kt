@@ -11,10 +11,10 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 
 class SpDelegate<T>(private val key: String, private val default: T) : ReadWriteProperty<Any?, T> {
     override operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        return SpStorage.getValue(key, default)
+        return DateStoreStorage.getValue(key, default)
     }
 
     override operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        SpStorage.setValue(key, value)
+        DateStoreStorage.setValue(key, value)
     }
 }
