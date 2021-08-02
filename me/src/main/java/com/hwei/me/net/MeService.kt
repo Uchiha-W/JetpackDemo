@@ -3,6 +3,7 @@ package com.hwei.me.net
 import com.hwei.lib_base.net.base.BasePage
 import com.hwei.lib_base.net.base.BaseResult
 import com.hwei.lib_common.UserBean
+import com.hwei.me.bean.response.CollectBean
 import retrofit2.http.*
 
 interface MeService {
@@ -22,5 +23,8 @@ interface MeService {
     ): BaseResult<UserBean>
 
     @GET("/lg/collect/list/{page}/json")
-    suspend fun getCollectList(@Path("page") page: Int): BaseResult<BasePage<String>>
+    suspend fun getCollectList(@Path("page") page: Int): BaseResult<BasePage<CollectBean>>
+
+    @GET("/user/logout/json")
+    suspend fun logout(): BaseResult<Any>
 }

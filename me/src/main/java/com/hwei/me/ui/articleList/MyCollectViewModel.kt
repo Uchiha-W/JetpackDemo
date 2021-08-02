@@ -1,31 +1,23 @@
 package com.hwei.me.ui.articleList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.cachedIn
 import com.hwei.lib_base.base.BaseViewModel
-import com.hwei.lib_base.net.base.BasePage
-import com.hwei.lib_base.net.request
+import com.hwei.lib_base.paging.BasePageDataSource
+import com.hwei.lib_base.paging.PagingConfigFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @HiltViewModel
 class MyCollectViewModel @Inject constructor(private val myCollectRepository: MyCollectRepository) :
     BaseViewModel() {
 
-    private val _collectList = MutableLiveData<BasePage<String>>()
-    val collectList: LiveData<BasePage<String>>
-        get() = _collectList
 
-    fun getCollectList(page: Int) {
-        request<BasePage<String>> {
-            onRequest {
-                myCollectRepository.getMyCollectList(page)
-            }
-            onSuccess {
-                _collectList.value = it
-            }
+    val pager = Pager(PagingConfigFactory.get()) {
+        BasePageDataSource {
+            myCollectRepository.getMyCollectList(it).data()
         }
-    }
+    }.flow.cachedIn(viewModelScope)
 
 }

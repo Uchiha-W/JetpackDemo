@@ -4,14 +4,14 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.demo.databinding.ActivityMainBinding
-import com.hwei.lib_base.base.BaseActivity
+import com.hwei.lib_base.base.BaseBindingActivity
 import com.hwei.lib_base.router.HomeRouter
 import com.hwei.lib_base.router.MeRouter
 import com.hwei.lib_base.router.SystemRouter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
     private val list = listOf(HomeRouter.home, SystemRouter.system, MeRouter.me)
 
@@ -40,20 +40,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
-//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-//
-//        }.launch(android.Manifest.permission.RECORD_AUDIO)
-//
-//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-//            if (it) {
-//                ARouter.getInstance().build(BaseRouter.camera).navigation()
-//            }
-//        }.launch(android.Manifest.permission.CAMERA)
-
     }
 
     override fun setLayoutId(): Int {
         return R.layout.activity_main
+    }
+
+    override fun setEvent() {
+
     }
 
 }

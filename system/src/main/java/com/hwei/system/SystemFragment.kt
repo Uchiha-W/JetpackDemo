@@ -3,7 +3,7 @@ package com.hwei.system
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_base.adapter.BaseMultiAdapter
-import com.hwei.lib_base.base.BaseFragment
+import com.hwei.lib_base.base.BaseBindingFragment
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.listener.OnItemClickListener
 import com.hwei.lib_base.router.SystemRouter
@@ -12,7 +12,7 @@ import com.hwei.system.adapter.SystemBean
 import com.hwei.system.databinding.FragmentSystemBinding
 
 @Route(path = SystemRouter.system)
-class SystemFragment : BaseFragment<FragmentSystemBinding>() {
+class SystemFragment : BaseBindingFragment<FragmentSystemBinding>() {
     lateinit var adapter: BaseMultiAdapter<SystemBean>
     override fun setLayoutId(): Int {
         return R.layout.fragment_system

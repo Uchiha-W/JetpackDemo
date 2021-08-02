@@ -3,14 +3,14 @@ package com.hwei.me.ui
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.hwei.lib_base.base.BaseFragment
+import com.hwei.lib_base.base.BaseBindingFragment
 import com.hwei.lib_base.router.MeRouter
 import com.hwei.lib_common.UserManager
 import com.hwei.me.R
 import com.hwei.me.databinding.FragmentMeBinding
 
 @Route(path = MeRouter.me)
-class MeFragment : BaseFragment<FragmentMeBinding>() {
+class MeFragment : BaseBindingFragment<FragmentMeBinding>() {
 
     private val list =
         mutableMapOf<String, Fragment?>(MeRouter.login to null, MeRouter.personal to null)

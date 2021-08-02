@@ -15,10 +15,21 @@ class ArticleViewModel @Inject constructor(private val articleRepository: Articl
     val collect: LiveData<Any>
         get() = _collect
 
-    fun collect(id: Int) {
+    fun collectInner(id: Int) {
         request<Any> {
             onRequest {
-                articleRepository.collect(id)
+                articleRepository.collectInner(id)
+            }
+            onSuccess {
+                _collect.value = it
+            }
+        }
+    }
+
+    fun collectOuter(title: String, author: String, link: String){
+        request<Any> {
+            onRequest {
+                articleRepository.collectOuter(title, author, link)
             }
             onSuccess {
                 _collect.value = it

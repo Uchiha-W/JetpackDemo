@@ -6,26 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import java.util.concurrent.atomic.AtomicInteger
 
-abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
-    lateinit var binding: T
+abstract class BaseFragment : Fragment() {
+
     lateinit var mContext: Context
     private var showingLoading = AtomicInteger(0)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, setLayoutId(), container, false)
         mContext = requireContext()
         initView()
         initData()
         setEvent()
-        return binding.root
+        return layoutInflater.inflate(setLayoutId(), container, false)
     }
 
     @LayoutRes

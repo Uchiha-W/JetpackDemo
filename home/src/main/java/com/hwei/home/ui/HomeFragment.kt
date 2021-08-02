@@ -11,7 +11,7 @@ import com.hwei.home.adapter.HomeAdapter
 import com.hwei.home.bean.Article
 import com.hwei.home.bean.BannerBean
 import com.hwei.home.databinding.FragmentHomeBinding
-import com.hwei.lib_base.base.BaseFragment
+import com.hwei.lib_base.base.BaseBindingFragment
 import com.hwei.lib_base.ktx.load
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.listener.OnItemClickListener
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @Route(path = HomeRouter.home)
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -75,8 +75,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         homeAdapter.setOnItemClickListener(object : OnItemClickListener<Article> {
             override fun onClick(v: View, item: Article, position: Int) {
-                ARouter.getInstance().build(HomeRouter.article).withString("link", item.link)
+                ARouter.getInstance().build(HomeRouter.article)
+                    .withString("link", item.link)
                     .withInt("id", item.id)
+                    .withString("title", item.title)
+                    .withString("author", item.author)
+                    .withBoolean("collect", item.collect)
                     .navigation()
             }
         })

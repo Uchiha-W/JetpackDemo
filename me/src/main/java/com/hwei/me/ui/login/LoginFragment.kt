@@ -2,7 +2,7 @@ package com.hwei.me.ui.login
 
 import androidx.fragment.app.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hwei.lib_base.base.BaseFragment
+import com.hwei.lib_base.base.BaseBindingFragment
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.router.MeRouter
 import com.hwei.lib_common.UserManager
@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @Route(path = MeRouter.login)
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseBindingFragment<FragmentLoginBinding>() {
 
     private val loginViewModel: LoginViewModel by viewModels()
 

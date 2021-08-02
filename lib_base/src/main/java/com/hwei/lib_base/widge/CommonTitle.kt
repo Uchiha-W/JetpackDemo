@@ -57,8 +57,15 @@ class CommonTitle @JvmOverloads constructor(
         binding.ivBack.setOnClickListener(onClickListener)
     }
 
-    fun setRightClickListener(onClickListener: OnClickListener) {
+    fun setTvRight(text: String = "", onClickListener: OnClickListener? = null) {
+        if (text.isNotEmpty()) {
+            binding.tvRight.text = text
+        }
         binding.tvRight.setOnClickListener(onClickListener)
+    }
+
+    fun setMiddleText(text: String) {
+        binding.tvTitle.text = text
     }
 
 }

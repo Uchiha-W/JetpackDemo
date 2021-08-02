@@ -5,7 +5,12 @@ import com.hwei.lib_base.net.base.Resource
 import javax.inject.Inject
 
 class ArticleRepository @Inject constructor(private val homeService: HomeService) {
-    suspend fun collect(id: Int): Resource<Any> {
-        return homeService.collectArticle(id).resource
+
+    suspend fun collectInner(id: Int): Resource<Any> {
+        return homeService.collectInnerArticle(id).resource
+    }
+
+    suspend fun collectOuter(title: String, author: String, link: String): Resource<Any> {
+        return homeService.collectOuterArticle(title, author, link).resource
     }
 }

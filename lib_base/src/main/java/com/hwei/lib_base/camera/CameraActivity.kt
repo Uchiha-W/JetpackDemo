@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.common.util.concurrent.ListenableFuture
 import com.hwei.lib_base.R
-import com.hwei.lib_base.base.BaseActivity
+import com.hwei.lib_base.base.BaseBindingActivity
 import com.hwei.lib_base.databinding.LayoutCameraBinding
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.router.BaseRouter
@@ -19,7 +19,7 @@ import java.util.*
 import java.util.concurrent.Executors
 
 @Route(path = BaseRouter.camera)
-class CameraActivity : BaseActivity<LayoutCameraBinding>() {
+class CameraActivity : BaseBindingActivity<LayoutCameraBinding>() {
 
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var cameraProvider: ProcessCameraProvider
@@ -154,6 +154,10 @@ class CameraActivity : BaseActivity<LayoutCameraBinding>() {
             }
             bindPreview(cameraProvider)
         }
+    }
+
+    override fun setEvent() {
+
     }
 
     @SuppressLint("RestrictedApi")
