@@ -10,5 +10,5 @@
         tools:layout="@layout/fragment_system"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.hwei.system.SystemFragment"/>
+        android:name="com.hwei.system.ui.system.SystemFragment"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

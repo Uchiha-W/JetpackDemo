@@ -17,7 +17,7 @@ class BasePageDataSource<V : Any>(private val block: suspend (Int) -> BasePage<V
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
         return try {
-            val result = withContext(Dispatchers.Default) {
+            val result = withContext(Dispatchers.IO) {
                 block.invoke(params.key ?: 0)
             }
             if (result.over) {
@@ -26,6 +26,7 @@ class BasePageDataSource<V : Any>(private val block: suspend (Int) -> BasePage<V
                 LoadResult.Page(result.datas, null, result.curPage)
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             LoadResult.Error(e)
         }
     }
