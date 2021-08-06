@@ -6,4 +6,5 @@ apply from: common
 
 dependencies {
     api project(':lib_base')
+    api "com.google.accompanist:accompanist-swiperefresh:0.15.0"
 }

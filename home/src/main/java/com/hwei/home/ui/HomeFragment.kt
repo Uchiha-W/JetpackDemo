@@ -63,6 +63,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
             when (it.append) {
                 is LoadState.Error -> {
                     binding.smartRefreshLayout.finishLoadMore(false)
+                    showToast((it.append as LoadState.Error).error.message ?: "unknown error")
                 }
                 is LoadState.NotLoading -> {
                     binding.smartRefreshLayout.finishLoadMore()

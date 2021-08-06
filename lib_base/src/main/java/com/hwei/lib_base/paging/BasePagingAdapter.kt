@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.hwei.lib_base.adapter.IMultiSupport
 import com.hwei.lib_base.base.BaseViewHolder
 import com.hwei.lib_base.listener.OnItemClickListener
 import com.hwei.lib_base.listener.OnItemLongClickListener
+import kotlinx.coroutines.withContext
 
 abstract class BasePagingAdapter<VB : ViewDataBinding, T : Any>(
     callback: DiffUtil.ItemCallback<T>

@@ -9,10 +9,11 @@ import kotlinx.coroutines.withContext
 class BasePageDataSource<V : Any>(private val block: suspend (Int) -> BasePage<V>) :
     PagingSource<Int, V>() {
     override fun getRefreshKey(state: PagingState<Int, V>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
+//        return state.anchorPosition?.let { anchorPosition ->
+//            val anchorPage = state.closestPageToPosition(anchorPosition)
+//            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+//        }
+        return 0
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {

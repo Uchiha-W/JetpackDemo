@@ -44,85 +44,87 @@ class SystemFragment : BaseComposeFragment() {
     fun System() {
         val tabList = arrayOf("体系", "导航")
         val state = systemViewModel.systemBeanItem.observeAsState()
-        Scaffold {
-            Column {
-                val tabStates = remember { mutableStateOf(0) }
-                TabRow(
-                    selectedTabIndex = tabStates.value,
-                    backgroundColor = colorResource(id = R.color.app_300),
-                ) {
-                    tabList.forEachIndexed { index, s ->
-                        Tab(selected = index == tabStates.value,
-                            selectedContentColor = colorResource(id = R.color.app_600),
-                            unselectedContentColor = colorResource(id = R.color.app_50),
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(20.dp), onClick = {
-                                tabStates.value = index
-                            }) {
-                            Text(text = s)
+        MaterialTheme {
+            Scaffold {
+                Column {
+                    val tabStates = remember { mutableStateOf(0) }
+                    TabRow(
+                        selectedTabIndex = tabStates.value,
+                        backgroundColor = colorResource(id = R.color.app_300),
+                    ) {
+                        tabList.forEachIndexed { index, s ->
+                            Tab(selected = index == tabStates.value,
+                                selectedContentColor = colorResource(id = R.color.app_600),
+                                unselectedContentColor = colorResource(id = R.color.app_50),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(20.dp), onClick = {
+                                    tabStates.value = index
+                                }) {
+                                Text(text = s)
+                            }
                         }
                     }
-                }
-                Divider()
-                if (tabStates.value == 0) {
-                    Box(modifier = Modifier.weight(1f)) {
-                        val choosePosition = remember {
-                            mutableStateOf(0)
-                        }
-                        Row {
-                            state.value?.let { it ->
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .padding(10.dp, 10.dp)
-                                        .width(100.dp)
-                                ) {
-                                    items(it.size) { index ->
-                                        Text(
-                                            text = it[index].name,
-                                            Modifier
-                                                .clickable {
-                                                    choosePosition.value = index
-                                                }
-                                                .padding(10.dp),
-                                            color = colorResource(id = if (choosePosition.value == index) R.color.app_600 else R.color.defaul)
-                                        )
+                    Divider()
+                    if (tabStates.value == 0) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            val choosePosition = remember {
+                                mutableStateOf(0)
+                            }
+                            Row {
+                                state.value?.let { it ->
+                                    LazyColumn(
+                                        modifier = Modifier
+                                            .padding(10.dp, 10.dp)
+                                            .width(100.dp)
+                                    ) {
+                                        items(it.size) { index ->
+                                            Text(
+                                                text = it[index].name,
+                                                Modifier
+                                                    .clickable {
+                                                        choosePosition.value = index
+                                                    }
+                                                    .padding(10.dp),
+                                                color = colorResource(id = if (choosePosition.value == index) R.color.app_600 else R.color.defaul)
+                                            )
+                                        }
                                     }
-                                }
-                                Box(
-                                    modifier = Modifier
-                                        .width(1.dp)
-                                        .fillMaxHeight()
-                                        .background(colorResource(id = R.color.defaul))
-                                )
-                                LazyVerticalGrid(
-                                    cells = GridCells.Fixed(2),
-                                    modifier = Modifier.weight(1f)
-                                ) {
-                                    items(it[choosePosition.value].children.size) { index ->
-                                        Text(
-                                            text = it[choosePosition.value].children[index].name,
-                                            color = colorResource(id = R.color.defaul),
-                                            modifier = Modifier
-                                                .padding(10.dp)
-                                                .clickable {
-                                                    val item =
-                                                        it[choosePosition.value].children[index]
-                                                    ARouter
-                                                        .getInstance()
-                                                        .build(SystemRouter.article)
-                                                        .withInt("id", item.id)
-                                                        .withString("title", item.name)
-                                                        .navigation()
-                                                }
-                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .width(1.dp)
+                                            .fillMaxHeight()
+                                            .background(colorResource(id = R.color.defaul))
+                                    )
+                                    LazyVerticalGrid(
+                                        cells = GridCells.Fixed(2),
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        items(it[choosePosition.value].children.size) { index ->
+                                            Text(
+                                                text = it[choosePosition.value].children[index].name,
+                                                color = colorResource(id = R.color.defaul),
+                                                modifier = Modifier
+                                                    .padding(10.dp)
+                                                    .clickable {
+                                                        val item =
+                                                            it[choosePosition.value].children[index]
+                                                        ARouter
+                                                            .getInstance()
+                                                            .build(SystemRouter.article)
+                                                            .withInt("id", item.id)
+                                                            .withString("title", item.name)
+                                                            .navigation()
+                                                    }
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
+                    } else {
+                        //todo
                     }
-                } else {
-                    //todo
                 }
             }
         }
