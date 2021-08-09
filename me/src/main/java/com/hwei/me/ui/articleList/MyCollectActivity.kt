@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import com.hwei.lib_base.router.HomeRouter
 import com.hwei.lib_base.router.MeRouter
 import com.hwei.lib_base.widge.CommonTitle
 import com.hwei.lib_common.PagingFooter
+import com.hwei.lib_common.myTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -48,37 +50,44 @@ class MyCollectActivity : BaseActivity() {
 
     @Composable
     fun Content() {
-        Column {
-            val lazyPaging = myCollectViewModel.pager.collectAsLazyPagingItems()
-            AndroidView(factory = {
-                CommonTitle(it).apply {
-                    setMiddleText("我的收藏")
-                }
-            })
-            LazyColumn(
-                contentPadding = PaddingValues(10.dp, 10.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
-            ) {
-                items(lazyPaging.itemCount) { it ->
-                    Text(text = lazyPaging.getAsState(it).value?.title ?: "",
-                        Modifier
-                            .clickable {
-                                val item = lazyPaging.snapshot().items[it]
-                                ARouter
-                                    .getInstance()
-                                    .build(HomeRouter.article)
-                                    .withString("link", item.link)
-                                    .withInt("id", item.id)
-                                    .withString("title", item.title)
-                                    .withString("author", item.author)
-                                    .withBoolean("collect", true)
-                                    .navigation()
+        myTheme {
+            Scaffold {
+                Column {
+                    val lazyPaging = myCollectViewModel.pager.collectAsLazyPagingItems()
+                    AndroidView(factory = {
+                        CommonTitle(it).apply {
+                            setMiddleText("我的收藏")
+                        }
+                    })
+                    LazyColumn(
+                        contentPadding = PaddingValues(10.dp, 10.dp),
+                        verticalArrangement = Arrangement.spacedBy(
+                            20.dp,
+                            Alignment.CenterVertically
+                        )
+                    ) {
+                        items(lazyPaging.itemCount) { it ->
+                            Text(text = lazyPaging.getAsState(it).value?.title ?: "",
+                                Modifier
+                                    .clickable {
+                                        val item = lazyPaging.snapshot().items[it]
+                                        ARouter
+                                            .getInstance()
+                                            .build(HomeRouter.article)
+                                            .withString("link", item.link)
+                                            .withInt("id", item.id)
+                                            .withString("title", item.title)
+                                            .withString("author", item.author)
+                                            .withBoolean("collect", true)
+                                            .navigation()
+                                    }
+                                    .fillMaxWidth())
+                        }
+                        item {
+                            PagingFooter(loadState = lazyPaging.loadState) {
+                                lazyPaging.retry()
                             }
-                            .fillMaxWidth())
-                }
-                item {
-                    PagingFooter(loadState = lazyPaging.loadState) {
-                        lazyPaging.retry()
+                        }
                     }
                 }
             }

@@ -24,6 +24,7 @@ import com.hwei.lib_base.router.SystemRouter
 import com.hwei.lib_base.widge.CommonTitle
 import com.hwei.lib_common.PagingFooter
 import com.hwei.lib_common.PagingLoadingContent
+import com.hwei.lib_common.myTheme
 import com.hwei.system.ui.system.SystemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,40 +51,44 @@ class ArticleListActivity : BaseActivity() {
 
     @Composable
     fun ArticleList() {
-        Scaffold(topBar = {
-            AndroidView(factory = {
-                CommonTitle(it).apply {
-                    setMiddleText(title)
-                }
-            })
-        }) {
-            Column {
-                val lazyPaging = systemViewModel.pager.collectAsLazyPagingItems()
-                PagingLoadingContent(loadState = lazyPaging.loadState, { lazyPaging.refresh() }) {
-                    LazyColumn(
-                        contentPadding = PaddingValues(10.dp, 10.dp),
-                        verticalArrangement = Arrangement.spacedBy(
-                            20.dp,
-                            Alignment.CenterVertically
-                        )
-                    ) {
-                        items(lazyPaging.snapshot().size) { index ->
-                            Text(
-                                text = lazyPaging.getAsState(index = index).value?.title ?: "",
-                                Modifier.clickable {
-                                    val item = lazyPaging.snapshot().items[index]
-                                    ARouter.getInstance().build(HomeRouter.article)
-                                        .withString("link", item.link)
-                                        .withInt("id", item.id)
-                                        .withString("title", item.title)
-                                        .withString("author", item.author)
-                                        .withBoolean("collect", item.collect)
-                                        .navigation()
-                                })
-                        }
-                        item {
-                            PagingFooter(loadState = lazyPaging.loadState) {
-                                lazyPaging.retry()
+        myTheme {
+            Scaffold(topBar = {
+                AndroidView(factory = {
+                    CommonTitle(it).apply {
+                        setMiddleText(title)
+                    }
+                })
+            }) {
+                Column {
+                    val lazyPaging = systemViewModel.pager.collectAsLazyPagingItems()
+                    PagingLoadingContent(
+                        loadState = lazyPaging.loadState,
+                        { lazyPaging.refresh() }) {
+                        LazyColumn(
+                            contentPadding = PaddingValues(10.dp, 10.dp),
+                            verticalArrangement = Arrangement.spacedBy(
+                                20.dp,
+                                Alignment.CenterVertically
+                            )
+                        ) {
+                            items(lazyPaging.snapshot().size) { index ->
+                                Text(
+                                    text = lazyPaging.getAsState(index = index).value?.title ?: "",
+                                    Modifier.clickable {
+                                        val item = lazyPaging.snapshot().items[index]
+                                        ARouter.getInstance().build(HomeRouter.article)
+                                            .withString("link", item.link)
+                                            .withInt("id", item.id)
+                                            .withString("title", item.title)
+                                            .withString("author", item.author)
+                                            .withBoolean("collect", item.collect)
+                                            .navigation()
+                                    })
+                            }
+                            item {
+                                PagingFooter(loadState = lazyPaging.loadState) {
+                                    lazyPaging.retry()
+                                }
                             }
                         }
                     }
