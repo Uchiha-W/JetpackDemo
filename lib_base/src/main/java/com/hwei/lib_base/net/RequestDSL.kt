@@ -4,9 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.hwei.lib_base.base.BaseViewModel
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.net.base.Resource
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 abstract class RequestDSL<T> {
     protected var onSuccess: (suspend (T) -> Unit)? = null
@@ -33,9 +31,11 @@ abstract class RequestDSL<T> {
 }
 
 fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>.() -> Unit) {
-    return object : RequestDSL<T>() {
+    object : RequestDSL<T>() {
         override fun build() {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->
+
+            }) {
                 try {
                     if (showLoading) {
                         showLoadingLiveData.value = true

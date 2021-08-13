@@ -1,27 +1,19 @@
 package com.hwei.me.ui.persional
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.hwei.lib_base.base.BaseViewModel
-import com.hwei.lib_base.net.request
+import com.hwei.lib_base.net.flowRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(private val personRepository: PersonRepository) :
     BaseViewModel() {
 
-    private val _logout = MutableLiveData<Any>()
-    val logout: LiveData<Any>
-        get() = _logout
-
-    fun logout() {
-        request<Any> {
+    fun logout(): Flow<Any> {
+        return flowRequest<Any> {
             onRequest {
                 personRepository.logout()
-            }
-            onSuccess {
-                _logout.value = it
             }
         }
     }

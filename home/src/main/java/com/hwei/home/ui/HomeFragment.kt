@@ -20,6 +20,7 @@ import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -88,7 +89,25 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
     }
 
     override fun initData() {
-        homeViewModel.getBannerList()
+        lifecycleScope.launchWhenCreated {
+            homeViewModel.getBannerList().collect {
+                binding.banner.apply {
+                    adapter = object : BannerImageAdapter<BannerBean>(it.toMutableList()) {
+                        override fun onBindView(
+                            holder: BannerImageHolder,
+                            data: BannerBean,
+                            position: Int,
+                            size: Int
+                        ) {
+                            holder.imageView.load(mContext, data.imagePath)
+                        }
+                    }
+                    addBannerLifecycleObserver(this@HomeFragment)//添加生命周期观察者
+                    indicator = CircleIndicator(mContext)
+                }
+            }
+        }
+
     }
 
 
@@ -97,22 +116,6 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
             lifecycleScope.launch {
                 binding.smartRefreshLayout.finishRefresh()
                 homeAdapter.submitData(it)
-            }
-        }
-        homeViewModel.bannerData.observe(this) {
-            binding.banner.apply {
-                adapter = object : BannerImageAdapter<BannerBean>(it.toMutableList()) {
-                    override fun onBindView(
-                        holder: BannerImageHolder,
-                        data: BannerBean,
-                        position: Int,
-                        size: Int
-                    ) {
-                        holder.imageView.load(mContext, data.imagePath)
-                    }
-                }
-                addBannerLifecycleObserver(this@HomeFragment)//添加生命周期观察者
-                indicator = CircleIndicator(mContext)
             }
         }
     }

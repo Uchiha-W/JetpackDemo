@@ -26,7 +26,7 @@ class ArticleViewModel @Inject constructor(private val articleRepository: Articl
         }
     }
 
-    fun collectOuter(title: String, author: String, link: String){
+    fun collectOuter(title: String, author: String, link: String) {
         request<Any> {
             onRequest {
                 articleRepository.collectOuter(title, author, link)

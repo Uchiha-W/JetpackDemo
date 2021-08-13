@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -45,7 +45,7 @@ class SystemFragment : BaseComposeFragment() {
     @Composable
     fun System() {
         val tabList = arrayOf("体系", "导航")
-        val state = systemViewModel.systemBeanItem.observeAsState()
+        val state = systemViewModel.getSystemData().collectAsState(initial = mutableListOf())
         myTheme {
             Scaffold {
                 Column {
@@ -75,7 +75,7 @@ class SystemFragment : BaseComposeFragment() {
                                 mutableStateOf(0)
                             }
                             Row {
-                                state.value?.let { it ->
+                                state.value.let { it ->
                                     LazyColumn(
                                         modifier = Modifier
                                             .padding(10.dp, 10.dp)
@@ -105,22 +105,24 @@ class SystemFragment : BaseComposeFragment() {
                                         cells = GridCells.Fixed(2),
                                         modifier = Modifier.weight(1f)
                                     ) {
-                                        items(it[choosePosition.value].children.size) { index ->
-                                            Text(
-                                                text = it[choosePosition.value].children[index].name,
-                                                modifier = Modifier
-                                                    .padding(10.dp)
-                                                    .clickable {
-                                                        val item =
-                                                            it[choosePosition.value].children[index]
-                                                        ARouter
-                                                            .getInstance()
-                                                            .build(SystemRouter.article)
-                                                            .withInt("id", item.id)
-                                                            .withString("title", item.name)
-                                                            .navigation()
-                                                    },
-                                            )
+                                        if (it.isNotEmpty() && it.size > choosePosition.value) {
+                                            items(it[choosePosition.value].children.size) { index ->
+                                                Text(
+                                                    text = it[choosePosition.value].children[index].name,
+                                                    modifier = Modifier
+                                                        .padding(10.dp)
+                                                        .clickable {
+                                                            val item =
+                                                                it[choosePosition.value].children[index]
+                                                            ARouter
+                                                                .getInstance()
+                                                                .build(SystemRouter.article)
+                                                                .withInt("id", item.id)
+                                                                .withString("title", item.name)
+                                                                .navigation()
+                                                        },
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -145,7 +147,7 @@ class SystemFragment : BaseComposeFragment() {
     }
 
     override fun initData() {
-        systemViewModel.getSystemData()
+
     }
 
     override fun setEvent() {
