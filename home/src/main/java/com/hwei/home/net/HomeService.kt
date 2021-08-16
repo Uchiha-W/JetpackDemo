@@ -28,5 +28,5 @@ interface HomeService {
         @Field("title") title: String,
         @Field("author") author: String,
         @Field("link") link: String
-    ):BaseResult<Any>
+    ): BaseResult<Any>
 }
