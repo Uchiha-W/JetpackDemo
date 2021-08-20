@@ -1,6 +1,7 @@
 package com.hwei.home.ui
 
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -38,6 +39,19 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
 
     override fun initView() {
         observeLoading(homeViewModel)
+        binding.searchView.apply {
+            isIconified = true
+            queryHint = "搜索"
+            setOnClickListener {
+                ARouter.getInstance().build(HomeRouter.search).withOptionsCompat(
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        requireActivity(),
+                        binding.searchView,
+                        "searchView"
+                    )
+                ).navigation(requireContext())
+            }
+        }
         binding.recyclerView.apply {
             adapter = homeAdapter
         }

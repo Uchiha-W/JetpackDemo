@@ -21,7 +21,7 @@ class HomeAdapter @Inject constructor() :
         when (getItem(position)?.viewType) {
             1 -> {
                 val binding = holder.binding as ItemHomeBinding
-                binding.article = getItem(position)
+                binding.tvArticle.text = getItem(position)?.title
             }
         }
     }

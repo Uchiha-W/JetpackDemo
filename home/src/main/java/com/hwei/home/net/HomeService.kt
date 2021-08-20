@@ -29,4 +29,12 @@ interface HomeService {
         @Field("author") author: String,
         @Field("link") link: String
     ): BaseResult<Any>
+
+    @POST("/article/query/{page}/json")
+    @FormUrlEncoded
+    suspend fun search(
+        @Path("page") page: Int,
+        @Field("k") content: String
+    ): BaseResult<BasePage<Article>>
+
 }
