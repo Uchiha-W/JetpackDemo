@@ -1,7 +1,7 @@
 package com.hwei.lib_common
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * {"admin":false,"chapterTops":[],"coinCount":0,"collectIds":[],"email":"","icon":"","id":97651,"nickname":"hw123456789","password":"","publicName":"hw123456789","token":"","type":0,"username":"hw123456789"}
