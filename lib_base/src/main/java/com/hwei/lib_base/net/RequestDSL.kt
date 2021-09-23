@@ -36,28 +36,64 @@ fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>
             viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->
 
             }) {
-                try {
-                    if (showLoading) {
-                        showLoadingLiveData.value = true
-                    }
-                    onRequest?.invoke(this).apply {
-                        when (this) {
-                            is Resource.Success -> onSuccess?.invoke(this.data())
-                            is Resource.Error -> {
-                                onFailure?.invoke(this.error())
-                                showToast(this.error())
+                while (true) {
+                    ensureActive()
+                    try {
+                        if (showLoading) {
+                            showLoadingLiveData.value = true
+                        }
+                        onRequest?.invoke(this).apply {
+                            when (this) {
+                                is Resource.Success -> onSuccess?.invoke(this.data())
+                                is Resource.Error -> {
+                                    onFailure?.invoke(this.error())
+                                    showToast(this.error())
+                                }
                             }
                         }
+                    } catch (e: Exception) {
+                        if (e !is CancellationException) {
+                            onFailure?.invoke(e.message.orEmpty())
+                            showToast(e.message.orEmpty())
+                        }
+                    } finally {
+                        onComplete?.invoke()
+                        if (showLoading) {
+                            showLoadingLiveData.value = false
+                        }
                     }
-                } catch (e: Exception) {
-                    if (e !is CancellationException) {
-                        onFailure?.invoke(e.message.orEmpty())
-                        showToast(e.message.orEmpty())
-                    }
-                } finally {
-                    onComplete?.invoke()
-                    if (showLoading) {
-                        showLoadingLiveData.value = false
+                }
+            }
+        }
+    }.apply(block).build()
+}
+
+fun <T> BaseViewModel.pollRequest(delayMs: Long = 1000, block: RequestDSL<T>.() -> Unit) {
+    object : RequestDSL<T>() {
+        override fun build() {
+            viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->
+
+            }) {
+                while (true) {
+                    delay(delayMs)
+                    ensureActive()
+                    try {
+                        onRequest?.invoke(this).apply {
+                            when (this) {
+                                is Resource.Success -> onSuccess?.invoke(this.data())
+                                is Resource.Error -> {
+                                    onFailure?.invoke(this.error())
+                                    showToast(this.error())
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        if (e !is CancellationException) {
+                            onFailure?.invoke(e.message.orEmpty())
+                            showToast(e.message.orEmpty())
+                        }
+                    } finally {
+                        onComplete?.invoke()
                     }
                 }
             }
