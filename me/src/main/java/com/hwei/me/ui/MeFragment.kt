@@ -53,7 +53,7 @@ class MeFragment : BaseBindingFragment<FragmentMeBinding>() {
                     add(R.id.cl_container, fragment!!, tag)
                     show(fragment)
                     currentFragment?.let {
-                        hide(it)
+                        remove(it)
                     }
                     commit()
                 }
@@ -63,7 +63,7 @@ class MeFragment : BaseBindingFragment<FragmentMeBinding>() {
                 .apply {
                     show(fragment)
                     currentFragment?.let {
-                        hide(it)
+                        remove(it)
                     }
                     commit()
                 }

@@ -34,9 +34,9 @@ class FlowRequestDSL<T> {
     }
 }
 
-fun <T> BaseViewModel.flowRequest(
+inline fun <T> BaseViewModel.flowRequest(
     showLoading: Boolean = false,
-    block: FlowRequestDSL<T>.() -> Unit
+    crossinline block: FlowRequestDSL<T>.() -> Unit
 ): Flow<T> {
     return flow<T> {
         val request = FlowRequestDSL<T>().apply(block)
@@ -84,9 +84,9 @@ fun <T> BaseViewModel.flowRequest(
 //  }
  */
 
-fun <T> BaseViewModel.pollFlowRequest(
+inline fun <T> BaseViewModel.pollFlowRequest(
     delayMs: Long = 1000,
-    block: FlowRequestDSL<T>.() -> Unit
+    crossinline block: FlowRequestDSL<T>.() -> Unit
 ): Flow<T> {
     return callbackFlow {
         val request = FlowRequestDSL<T>().apply(block)

@@ -30,7 +30,7 @@ abstract class RequestDSL<T> {
     abstract fun build()
 }
 
-fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>.() -> Unit) {
+inline fun <T> BaseViewModel.request(showLoading: Boolean = false, crossinline block: RequestDSL<T>.() -> Unit) {
     object : RequestDSL<T>() {
         override fun build() {
             viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->
@@ -68,7 +68,7 @@ fun <T> BaseViewModel.request(showLoading: Boolean = false, block: RequestDSL<T>
     }.apply(block).build()
 }
 
-fun <T> BaseViewModel.pollRequest(delayMs: Long = 1000, block: RequestDSL<T>.() -> Unit) {
+inline fun <T> BaseViewModel.pollRequest(delayMs: Long = 1000,crossinline block: RequestDSL<T>.() -> Unit) {
     object : RequestDSL<T>() {
         override fun build() {
             viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->

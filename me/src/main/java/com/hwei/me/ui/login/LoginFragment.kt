@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.hwei.lib_base.base.BaseBindingFragment
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.router.MeRouter
+import com.hwei.lib_base.util.NotificationUtil
 import com.hwei.lib_common.UserManager
 import com.hwei.me.R
 import com.hwei.me.databinding.FragmentLoginBinding
@@ -35,6 +36,7 @@ class LoginFragment : BaseBindingFragment<FragmentLoginBinding>() {
                     UserManager.userBean.value = it
                 }
             }
+            NotificationUtil.show(requireContext())
         }
         binding.btnRegister.setOnClickListener {
             lifecycleScope.launch {
@@ -46,6 +48,7 @@ class LoginFragment : BaseBindingFragment<FragmentLoginBinding>() {
                     showToast("注册成功")
                 }
             }
+            NotificationUtil.gotoSetting(requireContext())
         }
     }
 

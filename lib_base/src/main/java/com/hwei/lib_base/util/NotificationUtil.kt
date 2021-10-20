@@ -5,6 +5,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
@@ -12,11 +14,12 @@ import androidx.core.app.NotificationManagerCompat
 import com.hwei.lib_base.BaseApplication
 import com.hwei.lib_base.R
 import com.hwei.lib_base.camera.CameraActivity
+import kotlin.random.Random
 
 object NotificationUtil {
 
-    private val last = "107"
-    private val CHANNEL_ID = "108"
+    private val last = "108"
+    private val CHANNEL_ID = "109"
 
 
     fun gotoSetting(context: Context) {
@@ -59,21 +62,8 @@ object NotificationUtil {
             .setOnlyAlertOnce(false)
             .build()
 
-        // 消息提示音
-//        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-//        RingtoneManager.getRingtone(context, uri).play()
-//
-//        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-//        // 震动
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            vibrator.vibrate(
-//                VibrationEffect.createOneShot(
-//                    400,
-//                    VibrationEffect.DEFAULT_AMPLITUDE
-//                )
-//            )
-//        }
-//        NotificationManagerCompat.from(context).notify(Random.nextInt(), notification)
+
+        NotificationManagerCompat.from(context).notify(Random.nextInt(), notification)
     }
 
 
@@ -89,6 +79,10 @@ object NotificationUtil {
             }
             channel.enableLights(true)
             channel.enableVibration(true)
+            channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+            val soundUri =
+                Uri.parse("android.resource://" + BaseApplication.context.packageName + "/" + R.raw.facebook)
+            channel.setSound(soundUri, AudioAttributes.Builder().build())
             // Register the channel with the system
             val notificationManager: NotificationManager =
                 BaseApplication.context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

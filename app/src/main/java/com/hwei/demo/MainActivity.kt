@@ -1,5 +1,8 @@
 package com.hwei.demo
 
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
@@ -49,5 +52,4 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     override fun setEvent() {
 
     }
-
 }

@@ -52,7 +52,7 @@ class PersonalFragment : BaseBindingFragment<FragementPersonalBinding>() {
                     lifecycleScope.launch {
                         repeatOnLifecycle(Lifecycle.State.STARTED) {
                             LocationUtil.getLocation().collectLatest {
-                                showToast(it)
+
                             }
                         }
                     }

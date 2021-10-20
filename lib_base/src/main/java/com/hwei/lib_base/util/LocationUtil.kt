@@ -33,8 +33,20 @@ object LocationUtil {
                     }
             }
 
+            val provider =
+                if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    LocationManager.NETWORK_PROVIDER
+                } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    LocationManager.GPS_PROVIDER
+                } else if (locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)) {
+                    LocationManager.PASSIVE_PROVIDER
+                } else {
+                    ""
+                }
+            if (provider == "") return@callbackFlow
+
             locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
+                provider,
                 5000,
                 0f,
                 locationListener

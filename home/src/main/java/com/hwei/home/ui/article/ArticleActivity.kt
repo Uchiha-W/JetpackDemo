@@ -1,9 +1,10 @@
 package com.hwei.home.ui.article
 
+import android.view.View
 import android.view.ViewGroup
+import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.widget.ProgressBar
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -66,13 +67,32 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
             loadUrl(link)
         }
         val progressBar = ProgressView(this)
-        progressBar.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,20.dp2px)
+        progressBar.layoutParams =
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 20.dp2px)
         binding.webView.addView(progressBar)
-        binding.webView.webChromeClient = object: WebChromeClient() {
+        binding.webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 progressBar.start(newProgress)
             }
+
+            override fun onJsAlert(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                result: JsResult?
+            ): Boolean {
+                result?.confirm()
+                return true
+            }
+        }
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.setOnLongClickListener {
+            val result = binding.webView.hitTestResult
+            if (result.type == WebView.HitTestResult.IMAGE_TYPE || result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+                showToast(result.extra ?: "")
+            }
+            true
         }
     }
 
