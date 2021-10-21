@@ -48,13 +48,7 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
     override fun initView() {
         ARouter.getInstance().inject(this)
         binding.commonTitle.apply {
-            setLeftClickListener {
-                if (binding.webView.canGoBack()) {
-                    binding.webView.goBack()
-                } else {
-                    onBackPressed()
-                }
-            }
+            setLeftClickListener { finish() }
             if (!collect) {
                 setTvRight("收藏") {
                     articleViewModel.collectOuter(title, author, link)
@@ -70,7 +64,7 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
         progressBar.layoutParams =
             ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 20.dp2px)
         binding.webView.addView(progressBar)
-        binding.webView.webChromeClient = object : WebChromeClient() {
+        binding.webView.setWebChromeClient(object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 progressBar.start(newProgress)
@@ -85,8 +79,11 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
                 result?.confirm()
                 return true
             }
-        }
+        })
+
         binding.webView.settings.domStorageEnabled = true
+        binding.webView.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+        binding.webView.isVerticalScrollBarEnabled = true
         binding.webView.setOnLongClickListener {
             val result = binding.webView.hitTestResult
             if (result.type == WebView.HitTestResult.IMAGE_TYPE || result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
@@ -106,4 +103,11 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
 
     }
 
+    override fun onBackPressed() {
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

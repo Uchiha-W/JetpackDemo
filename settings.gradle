@@ -5,3 +5,4 @@ include ':home'
 include ':app'
 rootProject.name = "Demo"
 include ':lib_common'
+include ':jsbridge'
