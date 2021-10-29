@@ -15,6 +15,7 @@ import com.hwei.lib_base.base.BaseBindingActivity
 import com.hwei.lib_base.ktx.dp2px
 import com.hwei.lib_base.ktx.showToast
 import com.hwei.lib_base.router.HomeRouter
+import com.hwei.lib_base.widge.CommonDialog
 import com.hwei.lib_common.widge.ProgressView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,14 +77,18 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
                 message: String?,
                 result: JsResult?
             ): Boolean {
-                result?.confirm()
+                CommonDialog(this@ArticleActivity).apply {
+                    setContent(message ?: "")
+                    setOnConfirmListener { result?.confirm() }
+                    setOnCancelListener { result?.cancel() }
+                }
                 return true
             }
         })
 
-        binding.webView.settings.domStorageEnabled = true
         binding.webView.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
         binding.webView.isVerticalScrollBarEnabled = true
+        binding.webView.settings.domStorageEnabled = true
         binding.webView.setOnLongClickListener {
             val result = binding.webView.hitTestResult
             if (result.type == WebView.HitTestResult.IMAGE_TYPE || result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
