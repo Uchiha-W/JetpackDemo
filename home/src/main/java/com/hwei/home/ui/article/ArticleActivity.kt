@@ -89,6 +89,7 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
         binding.webView.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
         binding.webView.isVerticalScrollBarEnabled = true
         binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.databaseEnabled
         binding.webView.setOnLongClickListener {
             val result = binding.webView.hitTestResult
             if (result.type == WebView.HitTestResult.IMAGE_TYPE || result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
@@ -114,5 +115,10 @@ class ArticleActivity : BaseBindingActivity<ActivityArticleBinding>() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        binding.webView.clearCache(true)
+        super.onDestroy()
     }
 }

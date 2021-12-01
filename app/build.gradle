@@ -6,14 +6,13 @@ plugins {
 apply from: common
 
 //load keystore.properties
-def keystorePropertiesFile = rootProject.file("secret/keystore.properties")
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+keystoreProperties.load(new FileInputStream(file("../secret/keystore.properties")))
 
 android {
     signingConfigs {
         'default' {
-            storeFile file(keystoreProperties['storeFile'])
+            storeFile file("../secret/hwei.jks")
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']

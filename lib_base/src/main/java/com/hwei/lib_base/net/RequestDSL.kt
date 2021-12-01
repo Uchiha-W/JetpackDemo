@@ -30,45 +30,50 @@ abstract class RequestDSL<T> {
     abstract fun build()
 }
 
-inline fun <T> BaseViewModel.request(showLoading: Boolean = false, crossinline block: RequestDSL<T>.() -> Unit) {
+ fun <T> BaseViewModel.request(
+    showLoading: Boolean = false,
+    block: RequestDSL<T>.() -> Unit
+) {
     object : RequestDSL<T>() {
         override fun build() {
-            viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->
-
+            viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, throwable ->
+                showToast(throwable.toString())
             }) {
-                while (true) {
-                    ensureActive()
-                    try {
-                        if (showLoading) {
-                            showLoadingLiveData.value = true
-                        }
-                        onRequest?.invoke(this).apply {
-                            when (this) {
-                                is Resource.Success -> onSuccess?.invoke(this.data())
-                                is Resource.Error -> {
-                                    onFailure?.invoke(this.error())
-                                    showToast(this.error())
-                                }
+                ensureActive()
+                try {
+                    if (showLoading) {
+                        showLoadingLiveData.value = true
+                    }
+                    onRequest?.invoke(this).apply {
+                        when (this) {
+                            is Resource.Success -> onSuccess?.invoke(this.data())
+                            is Resource.Error -> {
+                                onFailure?.invoke(this.error())
+                                showToast(this.error())
                             }
                         }
-                    } catch (e: Exception) {
-                        if (e !is CancellationException) {
-                            onFailure?.invoke(e.message.orEmpty())
-                            showToast(e.message.orEmpty())
-                        }
-                    } finally {
-                        onComplete?.invoke()
-                        if (showLoading) {
-                            showLoadingLiveData.value = false
-                        }
+                    }
+                } catch (e: Exception) {
+                    if (e !is CancellationException) {
+                        onFailure?.invoke(e.message.orEmpty())
+                        showToast(e.message.orEmpty())
+                    }
+                } finally {
+                    onComplete?.invoke()
+                    if (showLoading) {
+                        showLoadingLiveData.value = false
                     }
                 }
             }
+
         }
     }.apply(block).build()
 }
 
-inline fun <T> BaseViewModel.pollRequest(delayMs: Long = 1000,crossinline block: RequestDSL<T>.() -> Unit) {
+inline fun <T> BaseViewModel.pollRequest(
+    delayMs: Long = 1000,
+    crossinline block: RequestDSL<T>.() -> Unit
+) {
     object : RequestDSL<T>() {
         override fun build() {
             viewModelScope.launch(Dispatchers.Main + CoroutineExceptionHandler { _, _ ->

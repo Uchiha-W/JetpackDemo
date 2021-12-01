@@ -3,7 +3,7 @@ package com.hwei.home.ui
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
