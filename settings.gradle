@@ -6,3 +6,4 @@ include ':app'
 rootProject.name = "Demo"
 include ':lib_common'
 include ':jsbridge'
+include ':live'

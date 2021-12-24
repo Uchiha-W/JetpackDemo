@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.hwei.demo.databinding.ActivityMainBinding
 import com.hwei.lib_base.base.BaseBindingActivity
 import com.hwei.lib_base.router.HomeRouter
+import com.hwei.lib_base.router.LiveRouter
 import com.hwei.lib_base.router.MeRouter
 import com.hwei.lib_base.router.SystemRouter
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +17,7 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     private val list = listOf(HomeRouter.home, SystemRouter.system, MeRouter.me)
 
     override fun initData() {
-
+        ARouter.getInstance().build(LiveRouter.live).navigation()
     }
 
     override fun initView() {
