@@ -17,7 +17,7 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     private val list = listOf(HomeRouter.home, SystemRouter.system, MeRouter.me)
 
     override fun initData() {
-        ARouter.getInstance().build(LiveRouter.live).navigation()
+
     }
 
     override fun initView() {

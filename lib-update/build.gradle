@@ -1,0 +1,7 @@
+apply plugin: "com.android.library"
+apply from: config
+
+dependencies {
+    implementation qiwen
+    implementation project(":group-framework:lib-base")
+}

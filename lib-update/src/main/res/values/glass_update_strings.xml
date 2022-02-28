@@ -1,0 +1,7 @@
+<resources>
+    <string name="glass_update_prepare_download">准备下载....</string>
+    <string name="glass_update_downloading">下载中....</string>
+    <string name="glass_update_current_is_newest_version">当前已是最新版本</string>
+    <string name="glass_update_current_is_newest_version_XX">当前已是最新版本 %s</string>
+    <string name="glass_update_download_fail">下载失败</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="glass_update_prepare_download">Loading</string>
+    <string name="glass_update_downloading">Loading</string>
+    <string name="glass_update_current_is_newest_version">This is the latest version</string>
+    <string name="glass_update_current_is_newest_version_XX">This is the latest version %s</string>
+    <string name="glass_update_download_fail">Download failed</string>
+</resources>

@@ -15,6 +15,7 @@
         <entry key="..\:/JetpackDemo/app/src/main/res/layout/activity_main.xml" value="0.15615539858728558" />
         <entry key="..\:/JetpackDemo/app/src/main/res/layout/activity_test.xml" value="0.3223958333333333" />
         <entry key="..\:/JetpackDemo/home/src/main/res/layout/activity_article.xml" value="0.2554347826086957" />
+        <entry key="..\:/JetpackDemo/home/src/main/res/layout/activity_mock.xml" value="0.15670289855072464" />
         <entry key="..\:/JetpackDemo/home/src/main/res/layout/activity_search.xml" value="0.22" />
         <entry key="..\:/JetpackDemo/home/src/main/res/layout/fragment_home.xml" value="0.12" />
         <entry key="..\:/JetpackDemo/home/src/main/res/layout/item_home.xml" value="0.1634963768115942" />
@@ -28,7 +29,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

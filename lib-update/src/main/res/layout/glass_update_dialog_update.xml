@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/updateHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_update_header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="50dp"
+        android:text="发现新版本"
+        android:textColor="#FFFFFF"
+        android:textSize="23sp"
+        app:layout_constraintLeft_toLeftOf="@id/updateHeader"
+        app:layout_constraintTop_toTopOf="@id/updateHeader" />
+
+    <TextView
+        android:id="@+id/newVersionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="@id/titleTip"
+        app:layout_constraintTop_toBottomOf="@id/titleTip"
+        tools:text="v1.0" />
+
+    <View
+        android:id="@+id/topLineDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/updateHeader" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:bl_corners_bottomLeftRadius="10dp"
+        app:bl_corners_bottomRightRadius="10dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        app:bl_solid_color="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/topLineDivider">
+
+        <!-- 内容 -->
+        <ScrollView
+            android:id="@+id/scrollView_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="15dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#474747"
+                android:textIsSelectable="true"
+                android:textSize="16sp"
+                tools:text="这里是更新的文案，这里是更新的文案,\n 这里是更新的文案，这里是更新的文案\n 这里是更新的文案，这里是更新的文案" />
+
+        </ScrollView>
+
+        <!--更新进度布局-->
+        <LinearLayout
+            android:id="@+id/ll_update_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/scrollView_content">
+
+            <!--更新进度文本-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_update_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/glass_update_prepare_download"
+                    android:textColor="#24374E"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_update_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_update_tip"
+                    android:text="0%"
+                    android:textColor="#24374E"
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
+            </RelativeLayout>
+
+            <!--更新进度条-->
+            <ProgressBar
+                android:id="@+id/pb_update_progress"
+                style="@style/glass_update_progressbar_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="10dp"
+                android:max="100"
+                android:progress="0" />
+        </LinearLayout>
+
+        <!--操作按钮布局-->
+        <LinearLayout
+            android:id="@+id/ll_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/ll_update_progress">
+
+            <!--分隔线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F5F5F5" />
+
+            <!--按钮-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <!--按钮-取消-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_ignore"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="忽略"
+                    android:textColor="#32B2F7"
+                    android:textSize="18sp"
+                    app:bl_corners_bottomLeftRadius="5dp"
+                    app:bl_pressed_solid_color="#DCDCDC"
+                    app:bl_unPressed_solid_color="#00000000" />
+
+                <!--分隔线-->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#F5F5F5" />
+
+                <!--按钮-更新-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_update"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="升级"
+                    android:textColor="#4F9ECE"
+                    android:textSize="18sp"
+                    app:bl_corners_bottomRightRadius="5dp"
+                    app:bl_pressed_solid_color="#DCDCDC"
+                    app:bl_unPressed_solid_color="#00000000" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

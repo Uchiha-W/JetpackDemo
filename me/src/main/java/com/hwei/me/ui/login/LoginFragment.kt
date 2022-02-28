@@ -1,5 +1,6 @@
 package com.hwei.me.ui.login
 
+import android.text.InputType
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -25,6 +26,9 @@ class LoginFragment : BaseBindingFragment<FragmentLoginBinding>() {
     }
 
     override fun initView() {
+
+        binding.etPassword.inputType =
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         binding.btnLogin.setOnClickListener {
             lifecycleScope.launch {
